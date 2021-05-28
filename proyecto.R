@@ -49,4 +49,14 @@ library(FactoMineR)
 library(RcmdrPlugin.FactoMineR)
 library(Factoshiny)
 
-summary(Energia1) #todas las variables son cuantitativas
+summary(Energia1) #todas las variables son cuantitativas -> lo más útil será ACP
+
+# Correlación 
+
+cor(Energia1[1:24,2:15]) # Correlaciones altas: 
+#Prod_Ind-X.C_IND 0.87181122; Prod_ENE-PBIpc 0.9268224 ; Prod_ENE-X.IMPORTA 0.82742916 ; 
+# ConsENpc-PBIpc 0.8105287 ; ConsENpc-O_PRIpc = 0.9702329 ; ConsENpc-O_SECpc 0.9032520 ; ConsENpc-CO2pc_cons -0.8348153  ; ConsENpc-X.C_SEC 0.9360467 ; ConsENpc-C_ELECpc 0.8597183 ;
+# PBIpc-Prod_Ene  0.9268224 ; PBIpc-O_SECpc 0.9591698; PBIpc- C_ELECpc 0.8218865 ;
+# O_PRIpc- O_SECpc  0.87450511 ; O_PRIpc-CO2_cons -0.80239813 ; O_PRIpc-X.C_SEC  -0.92102668 ; 
+# O_SECpc - X.C_SEC  0.8961128 ; O_SECpc-C_ELECpc  0.8164657 ;CO2pc - X.IMPORTA 0.81533895 ; X.C_RES-C_ELECpc -0.8940039; X.C_SEC -C_ELECpc 0.80593479
+# 
