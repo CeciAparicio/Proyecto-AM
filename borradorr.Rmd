@@ -2,7 +2,9 @@
 title: "Untitled"
 author: "Cecilia Aparicio"
 date: "Mayo 2021"
-output: html_document
+output:
+  #pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -10,17 +12,71 @@ knitr::opts_chunk$set(include = FALSE)
 ```
 
 ##introducir acá de qué se va a tratar el proyecto: estudio de principales variables que explican el desarrollo sustentable, comparación entre los 80 y los 90 para identificar cambios que sean indicios de avance en el desarrollo de politicas energeticas etc etc etc##.
-Def de desarrollo sustentable: desarrollo que distribuye más equitativamente los beneficios del progreso económico, proteje al medioambiente nacional y mundial en beneficio de las futuras generaciones y mejore genuinamente la calidad de vida.
 
-El estudio de la sustentabilidad del desarrollo entonces, tal como se definió anteriormente, debe contemplar varias aristas. Desde la CEPAL(1997) se sugieren las siguientes: "se reconocen como dimensiones relevantes para el desarrollo sustentable la libertad política, el bienestar económico, la equidad social, y un medioambiente sano, además de una cierta conservación de los recursos naturales.".
-Dada la complejidad de las dimensiones, no pueden medirse directamente a través de un único indicador.
+## Desarrollo sustentable
+\
+Def de desarrollo sustentable: desarrollo que distribuye más equitativamente los beneficios del progreso económico, protege al medioambiente nacional y mundial en beneficio de las futuras generaciones y mejore genuinamente la calidad de vida.
+\
+Existe un fuerte vínculo entre el desarrollo y la energía, siendo este último un insumo fundamental para ello. Sin embargo, debe prestarse especial atención al efecto negativo que puede tener tal desarrollo en el medioambiente, y por tanto, en la disponibilidad futura de recursos energéticos. Aquí es donde entre en juego la noción de sustentabilidad.
+\
+El estudio del desarrollo sustentable entonces, deberá contemplar varias aristas. Desde la CEPAL(1997) se sugiere focalizarse en la dimensión *política, económica, social, y ambiental*. Dada la complejidad de las mismas, no pueden medirse directamente a través de un único indicador.
+\
 
-Vinculado a la libertad política: la autarquía energética
-productividad energética e industrial: eficiencia productiva y energética, menor nivel de emisión de CO2
-Cobertura de necesidades básicas de energía eléctrica en los hogares: calidad de vida y diversificación de la matriz eléctrica
-El nivel de emisión de CO2: reducción de emisiones de CO2
-Consumo de energía eléctrica pc: calidad de vida y diversificación de la matriz energética
-PBI pc: nivel de vida y desarrollo económico
+## Patrones de desarrollo detectados en AL
+\
+En el análisis de la sustentabilidad a nivel regional, OLADE (1997) define cuatro patrones:
+\
+A) Alto ingreso medio, moderada desigualdad social, baja integración productiva, fuerte dependencia de exportaciones energéticas. \
+B) Alta o moderada integración y diversificación productiva con gran absorción interna, marcada o moderada diferenciación social, importante base de recursos naturales, autosuficientes o moderadamente independientes de las importaciones energéticas. \
+C) Moderada o alta integración y diversificación productiva interna, desigualdad social atenuada, exportaciones diversificadas basadas en recursos naturales. \
+D) Bajo nivel de desarrollo relativo basado en recursos naturales y exportación de productos primarios/mineros/energéticos. \
+E) Bajo o muy bajo grado de desarrollo, con reducida dotación de recursos naturales. \
+
+La clasificación realizada por los autores fue la siguiente:
+\
+
+| **Clasificación** | **Países**                                                               |  
+|:-----------------:|:------------------------------------------------------------------------:| 
+| A                 | Venezuela, Trinidad y Tobago, Barbados                                   | 
+| B                 | Argentina, Brasil, Chile, Uruguay, Paraguay                              | 
+| C                 | Colombia, Costa Rica, México, Panamá, Jamaica                            | 
+| D                 | Bolivia, Ecuador, Guyana, Nicaragua, Perú, Suriname, Cuba                | 
+| E                 | Guatemala, Honduras, República Dominicana, El Salvador, Granada, Haití   | 
 
 
 
+
+### Indicadores:
+\
+* Dimensión política: la autarquía energética (% importaciones de energía) \
+* Dimensión económica: productividad energética e industrial, calidad del suministro eléctrico, intensidad energética, uso racional de la energía en sectores productivos, (Prod_Ind, Prod_Ene, C_IND, C_trans, O_pripc, O_SECpc, ConsENpc)
+* Dimensión social: cobertura de necesidades básicas de energía eléctrica en los hogares,consumo neto de electricidad de la poblacion , nivel de ingresos (%consumo de energía residencial, PBI pc , C_ELEC_pc) \
+* Ambiental: nivel de emisión de CO2 \
+\
+## Patrones de desarrollo detectados en AL
+\
+En el análisis de la sustentabilidad a nivel regional, OLADE (1997) define cuatro patrones:
+\
+A) Alto ingreso medio, moderada desigualdad social, baja integración productiva, fuerte dependencia de exportaciones energéticas. \
+B) Alta o moderada integración y diversificación productiva con gran absorción interna, marcada o moderada diferenciación social, importante base de recursos naturales, autosuficientes o moderadamente independientes de las importaciones energéticas. \
+C) Moderada o alta integración y diversificación productiva interna, desigualdad social atenuada, exportaciones diversificadas basadas en recursos naturales. \
+D) Bajo nivel de desarrollo relativo basado en recursos naturales y exportación de productos primarios/mineros/energéticos. \
+E) Bajo o muy bajo grado de desarrollo, con reducida dotación de recursos naturales. \
+
+La clasificación realizada por los autores fue la siguiente:
+\
+
+| **Clasificación** | **Países**                                                               |  
+|:-----------------:|:------------------------------------------------------------------------:| 
+| I.a                 | Venezuela, Trinidad y Tobago                                             | 
+| I.b                 | Barbados                                                                 | 
+| II.a                | Colombia, México                                                         | 
+| II.b                | Bolivia, Ecuador, Perú                                                   | 
+| III.a               | Argentina, Brasil, Chile, Uruguay, Paraguay                              | 
+| III.b               | Costa Rica, Panamá, Jamaica                                              | 
+| IV.a                | Guyana, Suriname, Nicaragua, Cuba                                        | 
+| IV.b                | Guatemala, Honduras, República Dominicana, El Salvador, Haití, Granada   | 
+
+###En estos patrones nos vamos a basar para reproducrilo con ACP y comparar los cambios entre el 84 y el 96###
+
+  

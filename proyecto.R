@@ -21,7 +21,7 @@ anio<-paste(19,anio,sep="" ) %>%
 max(anio)
 min(anio)
 unique(pais) #hay paises duplicados
-
+unique(anio)
 for (i in 1:144) {
  pais[i]= gsub(", ","_",pais[i])
  pais[i]= gsub(" _","_",pais[i])
@@ -38,7 +38,7 @@ ggplot(Energia1 ,aes(Año,paises_n,fill=Prod_Ind))+
   scale_fill_viridis_c(name="Prod IND",option ="C")+
   labs(title= ("PBI Industrial total"), x="Año", y="Países")+
   scale_x_continuous(breaks =c(1984,1991,1993,1994,1995,1996))
-#  Perú es el país cuyo PBI indsutrial más aumentó en los 90. Leves aumentos en Argentina, Barbados por unos años,
+#  Perú es el país cuyo PBI industrial más aumentó en los 90. Leves aumentos en Argentina, Barbados por unos años,
 #  Uruguay. EN otros casos disminuyó (Jamaica, Ecuador)
 
 ggplot(Energia1 %>% filter(Año== 1996) ,aes(X.IMPORTA,ConsENpc,color=paises_n,size=PBIpc))+
@@ -47,7 +47,7 @@ ggplot(Energia1 %>% filter(Año== 1996) ,aes(X.IMPORTA,ConsENpc,color=paises_n,s
   labs(title="% Importado en oferta energética vs Consumo final pc", subtitle = "Año 1984")
 
 rownames(Energia1)=Energia1$PAISES
-
+scale(Energia1[,2:15])
 #### VARIABLES
 
 summary(Energia1) #todas las variables son cuantitativas -> lo más útil será ACP
@@ -60,19 +60,28 @@ cor(Energia1[Energia1$Año==1984,2:15]) # Correlaciones altas en 1984:
 cor(Energia1[Energia1$Año==1996,2:15]) # Correlaciones altas en 1996: 
 #Prod_Ene-PBIpc 0.810985198; ConsENpc-O_PRIpc 0.915940442  ;ConsENpc_C - X.C_IND 0.890504571  ; X-C_SEC-X.C_TRAN 0.85696498 
 #
+#
 acp1984=PCA(Energia1[Energia1$Año==1984,c(2:15)])
 acp1996=PCA(Energia1[Energia1$Año==1996,c(2:15)])
 
 
-
-library(Factoshiny)
 res.pca1984 = PCA(Energia1[Energia1$Año==1984,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
 resshiny1984 = PCAshiny(res.pca1984)
 
 plot.PCA(res.PCA,choix='var',habillage = 'contrib',title="Gráfico perspectiva de variables")
 plot.PCA(res.PCA,habillage='contrib',title="Gráfico perspectiva de países",col.ind='#ED1536')
 summary(res.PCA1996) # las dos primeras dimensiones sólo aportan un 63.3% de la varianza, con 3 se explica 76.18%
-# ConENpc es explicada en 82.5%, PIBpc en 81.2%, O_SECpc en 92.4% , X.C_RES en en -89.6% porla primera dimension.
+## VARIABLES
+# D1 correlacion alta con PBIpc(0.81) , O_SECpc(0.92), XC_RES(-0.9) , CELECpc (0.92) , CONSENpc (0.85)
+# D2 correlacion alta con Prod_Ind (0.85)
+# D3 correlacion alta con CO2_con (0.91), CO2pc( 0.72)
+# D4 correlacion alta con X.Importa (0.95)
+# 
+## PAISES:
+# D1 representa bien a : Argentina, El Salvador, Guatemala, Haiti, Honduras, Nicaragua, Venezuela.
+# D2 : mejora la representacion de Arg, Honduras, y Venezuela; Uruguay, Brasil (aunque sigue siendo baja, 60%)
+# D3: con D1 mejora representacion de Trinidad,Paraguay,Bolivia; con D4 Paraguay
+# D4 con D1 mejora representación de Barbados y Cuba
 
 
 res.pca1996 = PCA(Energia1[Energia1$Año==1996,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
