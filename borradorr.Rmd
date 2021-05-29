@@ -53,29 +53,22 @@ La clasificación realizada por los autores fue la siguiente:
 * Dimensión social: cobertura de necesidades básicas de energía eléctrica en los hogares,consumo neto de electricidad de la poblacion , nivel de ingresos (%consumo de energía residencial, PBI pc , C_ELEC_pc) \
 * Ambiental: nivel de emisión de CO2 \
 \
-## Patrones de desarrollo detectados en AL
-\
-En el análisis de la sustentabilidad a nivel regional, OLADE (1997) define cuatro patrones:
-\
-A) Alto ingreso medio, moderada desigualdad social, baja integración productiva, fuerte dependencia de exportaciones energéticas. \
-B) Alta o moderada integración y diversificación productiva con gran absorción interna, marcada o moderada diferenciación social, importante base de recursos naturales, autosuficientes o moderadamente independientes de las importaciones energéticas. \
-C) Moderada o alta integración y diversificación productiva interna, desigualdad social atenuada, exportaciones diversificadas basadas en recursos naturales. \
-D) Bajo nivel de desarrollo relativo basado en recursos naturales y exportación de productos primarios/mineros/energéticos. \
-E) Bajo o muy bajo grado de desarrollo, con reducida dotación de recursos naturales. \
 
-La clasificación realizada por los autores fue la siguiente:
+## Patrones relacionados a las dimensioens de sustentabilidad en AL
+\
+Teniendo en cuenta los indicadores antes mencionados, la evaluación de ellos en la región llevaron a la conformación de 4 grandes "bloques" con 2 sub-bloques cada uno, que comparten distintas características.
 \
 
-| **Clasificación** | **Países**                                                               |  
-|:-----------------:|:------------------------------------------------------------------------:| 
-| I.a                 | Venezuela, Trinidad y Tobago                                             | 
-| I.b                 | Barbados                                                                 | 
-| II.a                | Colombia, México                                                         | 
-| II.b                | Bolivia, Ecuador, Perú                                                   | 
-| III.a               | Argentina, Brasil, Chile, Uruguay, Paraguay                              | 
-| III.b               | Costa Rica, Panamá, Jamaica                                              | 
-| IV.a                | Guyana, Suriname, Nicaragua, Cuba                                        | 
-| IV.b                | Guatemala, Honduras, República Dominicana, El Salvador, Haití, Granada   | 
+| **Clasificación**   | **Países**                                                               | **Descripción**  
+|:-------------------:|:------------------------------------------------------------------------:| 
+| I.a                 | Venezuela, Trinidad y Tobago                                             | Mono exportadores  |
+| I.b                 | Barbados                                                                 | Mono exportadores
+| II.a                | Colombia, México                                                         | Exportadores de energía con cobertura eléctica media-alta
+| II.b                | Bolivia, Ecuador, Perú                                                   | Exportadores de energía con cobertura eléctica media-baja
+| III                 | Argentina, Brasil, Chile, Uruguay, Paraguay                              | Autoabastecidos con cobertura variable de elementos energéticos básicos
+| III.a               | Costa Rica, Panamá, Jamaica                                              | Importadores con cobertura y requerimientos básicos media-alta 
+| IV.b                | Guyana, Suriname, Nicaragua, Cuba                                        | Importadores con cobertura y requerimientos básicos media-baja
+| IV.c                | Guatemala, Honduras, República Dominicana, El Salvador, Haití, Granada   | Importadores con cobertura y requerimientos básicos baja
 
 ###En estos patrones nos vamos a basar para reproducrilo con ACP y comparar los cambios entre el 84 y el 96###
 
