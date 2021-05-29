@@ -64,10 +64,20 @@ acp1984=PCA(Energia1[Energia1$Año==1984,c(2:15)])
 acp1996=PCA(Energia1[Energia1$Año==1996,c(2:15)])
 
 
+
 library(Factoshiny)
-resshiny = PCAshiny(res.pca1984)
+res.pca1984 = PCA(Energia1[Energia1$Año==1984,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
+resshiny1984 = PCAshiny(res.pca1984)
+
 plot.PCA(res.PCA,choix='var',habillage = 'contrib',title="Gráfico perspectiva de variables")
 plot.PCA(res.PCA,habillage='contrib',title="Gráfico perspectiva de países",col.ind='#ED1536')
-summary(res.PCA) # las dos primeras dimensiones sólo aportan un 63.3% de la varianza, con 3 se explica 76.18%
-# ConENpc es explicada en 82.5%,81.2% porla primera dimension
+summary(res.PCA1996) # las dos primeras dimensiones sólo aportan un 63.3% de la varianza, con 3 se explica 76.18%
+# ConENpc es explicada en 82.5%, PIBpc en 81.2%, O_SECpc en 92.4% , X.C_RES en en -89.6% porla primera dimension.
 
+
+res.pca1996 = PCA(Energia1[Energia1$Año==1996,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
+resshiny1996 = PCAshiny(res.pca1996)
+
+plot.PCA(res.PCA,choix='var',habillage = 'contrib',title="Gráfico perspectiva variables")
+plot.PCA(res.PCA,habillage='contrib',title="Gráfico perspectiva de países")
+summary(res.pca1996)
