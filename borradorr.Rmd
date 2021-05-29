@@ -10,7 +10,17 @@ knitr::opts_chunk$set(include = FALSE)
 ```
 
 ##introducir acá de qué se va a tratar el proyecto: estudio de principales variables que explican el desarrollo sustentable, comparación entre los 80 y los 90 para identificar cambios que sean indicios de avance en el desarrollo de politicas energeticas etc etc etc##.
-El estudio de la sustentabilidad del desarrollo debe contemplar varias aristas. Desde la CEPAL(1997) se definen de la siguiente manera: "se reconocen como dimensiones relevantes para el desarrollo sustentable la libertad política, el bienestar económico, la equidad social, y un medioambiente sano, además de una cierta conservación de los recursos naturales.".
+Def de desarrollo sustentable: desarrollo que distribuye más equitativamente los beneficios del progreso económico, proteje al medioambiente nacional y mundial en beneficio de las futuras generaciones y mejore genuinamente la calidad de vida.
+
+El estudio de la sustentabilidad del desarrollo entonces, tal como se definió anteriormente, debe contemplar varias aristas. Desde la CEPAL(1997) se sugieren las siguientes: "se reconocen como dimensiones relevantes para el desarrollo sustentable la libertad política, el bienestar económico, la equidad social, y un medioambiente sano, además de una cierta conservación de los recursos naturales.".
 Dada la complejidad de las dimensiones, no pueden medirse directamente a través de un único indicador.
 
-La autarquía energética, productividad energética,cobertura de energía eléctrica,
+Vinculado a la libertad política: la autarquía energética
+productividad energética e industrial: eficiencia productiva y energética, menor nivel de emisión de CO2
+Cobertura de necesidades básicas de energía eléctrica en los hogares: calidad de vida y diversificación de la matriz eléctrica
+El nivel de emisión de CO2: reducción de emisiones de CO2
+Consumo de energía eléctrica pc: calidad de vida y diversificación de la matriz energética
+PBI pc: nivel de vida y desarrollo económico
+
+
+
