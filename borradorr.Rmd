@@ -3,8 +3,8 @@ title: "Untitled"
 author: "Cecilia Aparicio"
 date: "Mayo 2021"
 output:
-  #pdf_document: default
   html_document: default
+  #pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -60,16 +60,16 @@ Teniendo en cuenta los indicadores antes mencionados, la evaluación de ellos en
 \
 
 | **Clasificación**   | **Países**                                                               | **Descripción**  
-|:-------------------:|:------------------------------------------------------------------------:| 
-| I.a                 | Venezuela, Trinidad y Tobago                                             | Mono exportadores  |
-| I.b                 | Barbados                                                                 | Mono exportadores
-| II.a                | Colombia, México                                                         | Exportadores de energía con cobertura eléctica media-alta
-| II.b                | Bolivia, Ecuador, Perú                                                   | Exportadores de energía con cobertura eléctica media-baja
-| III                 | Argentina, Brasil, Chile, Uruguay, Paraguay                              | Autoabastecidos con cobertura variable de elementos energéticos básicos
-| III.a               | Costa Rica, Panamá, Jamaica                                              | Importadores con cobertura y requerimientos básicos media-alta 
-| IV.b                | Guyana, Suriname, Nicaragua, Cuba                                        | Importadores con cobertura y requerimientos básicos media-baja
-| IV.c                | Guatemala, Honduras, República Dominicana, El Salvador, Haití, Granada   | Importadores con cobertura y requerimientos básicos baja
+|:-------------------:|:------------------------------------------------------------------------:|:------------------------------------------------------------------------| 
+| I.a                 | Venezuela, Trinidad y Tobago                                             | Mono exportadores                                                       |
+| I.b                 | Barbados                                                                 | Mono exportadores                                                       |
+| II.a                | Colombia, México                                                         | Exportadores de energía con cobertura eléctrica media-alta              |
+| II.b                | Bolivia, Ecuador, Perú                                                   | Exportadores de energía con cobertura eléctrica media-baja              |
+| III                 | Argentina, Brasil, Chile, Uruguay, Paraguay                              | Autoabastecidos con cobertura variable de elementos energéticos básicos |
+| III.a               | Costa Rica, Panamá, Jamaica                                              | Importadores con cobertura y requerimientos básicos media-alta          |
+| IV.b                | Guyana, Suriname, Nicaragua, Cuba                                        | Importadores con cobertura y requerimientos básicos media-baja          |
+| IV.c                | Guatemala, Honduras, República Dominicana, El Salvador, Haití, Granada   | Importadores con cobertura y requerimientos básicos baja                |
 
 ###En estos patrones nos vamos a basar para reproducrilo con ACP y comparar los cambios entre el 84 y el 96###
-
+###Ver cómo se relaciona esta clasificación con la anterior.##
   
