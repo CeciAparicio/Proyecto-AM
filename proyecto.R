@@ -47,7 +47,7 @@ ggplot(Energia1 %>% filter(Año== 1996) ,aes(X.IMPORTA,ConsENpc,color=paises_n,s
   labs(title="% Importado en oferta energética vs Consumo final pc", subtitle = "Año 1984")
 
 rownames(Energia1)=Energia1$PAISES
-scale(Energia1[,2:15])
+Energia_st<-scale(Energia1[,2:15])
 #### VARIABLES
 
 summary(Energia1) #todas las variables son cuantitativas -> lo más útil será ACP
@@ -90,3 +90,8 @@ resshiny1996 = PCAshiny(res.pca1996)
 plot.PCA(res.PCA,choix='var',habillage = 'contrib',title="Gráfico perspectiva variables")
 plot.PCA(res.PCA,habillage='contrib',title="Gráfico perspectiva de países")
 summary(res.pca1996)
+
+
+acp=PCA(Energia1[Energia1$Año==1993,c(2:15)])
+res.pca = PCA(Energia1[Energia1$Año==1993,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
+resshiny = PCAshiny(res.pca)
