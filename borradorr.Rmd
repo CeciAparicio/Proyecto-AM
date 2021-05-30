@@ -2,14 +2,18 @@
 title: "Untitled"
 author: "Cecilia Aparicio"
 date: "Mayo 2021"
-number_sections: true
+header-includes:
+   \usepackage{placeins}
 output:
   pdf_document: default
   html_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center")
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center",fig.pos = "!h")
+knitr::knit_hooks$set(plot = function(x, options)  {
+  paste0(knitr::hook_plot_tex(x, options), "\n\\FloatBarrier\n")
+})
 ``` 
 
 ```{r}
@@ -130,8 +134,8 @@ rownames(Energia1)=Energia1$PAISES
 
 #### Países contenidos en los datos:
 
-
-```{r}
+\
+```{r, include=FALSE}
 kable(unique(pais), booktabs=TRUE)
 ```
 
@@ -142,7 +146,7 @@ kable(unique(pais), booktabs=TRUE)
 Primeras 5 filas:
 
 
-```{r}
+```{r, include=FALSE}
 kable(head(Energia1[,2:15]),booktabs=TRUE, format="latex") %>% 
  scroll_box(width="100%")
 ```
@@ -153,7 +157,7 @@ kable(head(Energia1[,2:15]),booktabs=TRUE, format="latex") %>%
 Primeras 5 filas:
 
 
-```{r}
+```{r, include=FALSE}
 kable(head(Energia_st[4:17])) %>% 
   kable_styling(full_width = F, fixed_thead = T)
 ```
@@ -165,7 +169,7 @@ kable(head(Energia_st[4:17])) %>%
 Matriz de correlaciones entre variables:
 
 
-```{r correlaciones 1984}
+```{r correlaciones 1984, include=FALSE}
 kable(cor(Energia1[Energia1$Año==1984,2:15])) %>% 
   kable_styling(full_width = F, fixed_thead = T)
 ```
@@ -260,6 +264,7 @@ plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círcu
 
 En lo que respecta a los individuos (Países):
 
+
 ```{r, fig.cap="Dimensiones 1 y 2.", out.width="80%"}
 plot.PCA(res.pca1984,title="Gráfico perspectiva de Países 1984",habillage = 'cos2')
 ```
@@ -273,6 +278,7 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 ```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
 plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países 1984",habillage = 'cos2')
 ```
+
 
 Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
 
