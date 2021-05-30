@@ -136,7 +136,7 @@ kable(unique(pais), booktabs=TRUE)
 ```
 
 
-####**Datos**
+#### **Datos**
 
 
 Primeras 5 filas:
@@ -182,30 +182,32 @@ La existencia de correlación alta entre las variables justifica el uso de ACP. 
 La variabilidad de los datos es captada en un 46.54% por el primer eje de inercia creado a partir de ACP. Sumar una segunda dimensión incrementa este porcentaje a 63.3%. Se capta más del 80% de la varianza si se contemplan al menos 4 dimensiones. Según la regla de Kaiser, deberían retenerse aquellos componentes que tengan una varianza mayor o igual a 1. En nuestro caso, eso implicaría trabajar con 4 componentes.
 
 
+```{r,include=FALSE}
+acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
+res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
+```
 ```{r vp 1984, results='asis'}
 vp84<-res.pca1984[["eig"]][,1] %>% 
   as.data.frame()
 colnames(vp84)="Valores propios"
 kable(vp84,booktabs=TRUE)
 ```
-```{r,include=FALSE}
-acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
-res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
-```
 
 ```{r plot eigen84}
-ggplot(a,aes(x=seq(1:14),y=eigenvalue))+ ##mejorar el gráfico
+vp84<-cbind.data.frame(vp84,res.pca1984[["eig"]][,3])
+colnames(vp84)=c("Valores propios","% acumulado de varianza")
+ggplot(vp84,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
   geom_line()+
-  geom_label(aes(label=round(`percentage of variance`,2)))+
+  geom_label(aes(label=round(`% acumulado de varianza`,2)))+
   labs(title = "Varianza explicada por cada dimensión",x="Número del valor propio", y="Valores propios")
 
 ```
 
 
-Por otra parte, siguiendo el criterio *"Broken-sitcks"*, que sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en p partes. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes:
+Por otra parte, siguiendo el criterio *"Broken-sitcks"*, que sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en $p$ partes. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes:
 
 
-```{r criterio BS 1984, include=FALSE, fig.cap="Criterio Broken-sticks para la elección de componentes"}
+```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE}
 evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
   # Broken stick model
   n = length(ev)  
@@ -223,13 +225,14 @@ evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
   legend("topright", c("% Valor propio", "Criterio Broken Stick"),   
          pch=15, col=c("bisque",2), bty="n")  
   par(op)  
-} 
-evplot()
+}
+evplot(vp84[,2]^2)
 ```
+
 
 La pérdida de información en caso de trabajar con el plano principal sería de 36.7% con respecto a la nube de datos original, mientras que considerar 4 implica perder únicamente 13.8%.
 
-Una vez determinado, de forma preliminar, la dimensión en que se trabajará, realizamos el cálculo de componentes y su presentación gráfica. 
+Una vez determinado, de forma preliminar, la dimensión en que se trabajará, realizamos el cálculo de componentes y su presentación gráfica para observar los resultados y confirmarlo. 
 
 Desde la perspectiva de las variables, encontramos que las variables mejor representadas ($|\rho| \geq 0.6$) por las dimensiones elegidas son (en orden descendente):
 
@@ -239,6 +242,8 @@ Desde la perspectiva de las variables, encontramos que las variables mejor repre
 * Dimensión 4: Proporción de energía importada sobre el total de la oferta. \
 
 Resulta claro entonces que el tercer componente representará la *dimensión ambiental*, la cuarta representa la *dimensión política* (autarquía política dada por el nivel de dependencia energético), mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*.
+
+A su vez, entendemos que las dimensiones más relevante son la social y la económica, dado que son las que explican en mayor medida las variaciones de los datos. Siendo así, podemos restringir el análisis al plano principal, dónde estaríamos prescindiendo princpalmente, del aporte de las variables Importaciones y emisión de CO2 per cápita.
 
 Visualizamos en los correspondientes círculos de correlaciones:
 
@@ -257,7 +262,7 @@ Las totalidad de las variables se encuentran bien representadas al tener en cuen
 En lo que respecta a los individuos (Países):
 
 ```{r, fig.cap="Dimensiones 1 y 2."}
-plot.PCA(res.pca1984,habillage='co2',title="Gráfico perspectiva de Países",col.ind='#ED1536')
+plot.PCA(res.pca1984,choix = "ind",title="Gráfico perspectiva de Países",col.ind='#ED1536')
 ```
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
@@ -267,7 +272,7 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 
 
 ```{r, fig.cap="Dimensiones 3 y 4."}
-plot.PCA(res.axes=c(3,4),pca1984,habillage='co2',title="Gráfico perspectiva de Países",col.ind='#ED1536')
+plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países",col.ind='#ED1536')
 ```
 
 Las dimensiones 3 y 4 no representan lo suficiente a ningún país.
