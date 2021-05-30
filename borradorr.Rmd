@@ -4,8 +4,8 @@ author: "Cecilia Aparicio"
 date: "Mayo 2021"
 number_sections: true
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -76,8 +76,8 @@ La clasificación realizada por los autores fue la siguiente:
 
 * Dimensión política: la autarquía energética (% importaciones de energía) \
 * Dimensión económica: productividad energética e industrial, calidad del suministro eléctrico, intensidad energética, uso racional de la energía en sectores productivos, (Prod_Ind, Prod_Ene, C_IND, C_trans, O_pripc, O_SECpc, ConsENpc) \
-* Dimensión social: cobertura de necesidades básicas de energía eléctrica en los hogares,consumo neto de electricidad de la poblacion , nivel de ingresos (%consumo de energía residencial, PBI pc , C_ELEC_pc) \
-* Ambiental: nivel de emisión de CO2 \
+* Dimensión social: cobertura de necesidades básicas de energía eléctrica en los hogares,consumo neto de electricidad de la poblacion , nivel de ingresos, oferta/demanda de energía secundaria per-cápita (%consumo de energía residencial, PBI pc , C_ELEC_pc, O_SECpc, X.C_SEC). \
+* Ambiental: nivel de emisión de CO2. \
 
 
 ## Patrones relacionados a las dimensiones de sustentabilidad en AL
@@ -126,6 +126,7 @@ rownames(Energia_st)=Energia_st$PAISES
 rownames(Energia1)=Energia1$PAISES
 ```
 
+>Arreglar todas las tablas posteriores, no se ven bien en PDF
 
 #### Países contenidos en los datos:
 
@@ -172,24 +173,108 @@ kable(cor(Energia1[2:15])) %>%
 
 Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos. Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
 
+La existencia de correlación alta entre las variables justifica el uso de ACP. La relación entre ellas puede tener como resultado información redundante, la cual intentaremos "aislar" con este método.
 
+
+### Análisis de componentes principales para 1984
+
+
+La variabilidad de los datos es captada en un 46.54% por el primer eje de inercia creado a partir de ACP. Sumar una segunda dimensión incrementa este porcentaje a 63.3%. Se capta más del 80% de la varianza si se contemplan al menos 4 dimensiones. Según la regla de Kaiser, deberían retenerse aquellos componentes que tengan una varianza mayor o igual a 1. En nuestro caso, eso implicaría trabajar con 4 componentes.
+
+
+```{r vp 1984, results='asis'}
+vp84<-res.pca1984[["eig"]][,1] %>% 
+  as.data.frame()
+colnames(vp84)="Valores propios"
+kable(vp84,booktabs=TRUE)
+```
 ```{r,include=FALSE}
 acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
 res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
 ```
 
-
-
-```{r}
-plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Gráfico perspectiva de las variables")
+```{r plot eigen84}
+ggplot(a,aes(x=seq(1:14),y=eigenvalue))+ ##mejorar el gráfico
+  geom_line()+
+  geom_label(aes(label=round(`percentage of variance`,2)))+
+  labs(title = "Varianza explicada por cada dimensión",x="Número del valor propio", y="Valores propios")
 
 ```
 
 
+Por otra parte, siguiendo el criterio *"Broken-sitcks"*, que sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en p partes. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes:
 
-```{r}
-plot.PCA(res.pca1984,habillage='contrib',title="Gráfico perspectiva de países",col.ind='#ED1536')
+
+```{r criterio BS 1984, include=FALSE, fig.cap="Criterio Broken-sticks para la elección de componentes"}
+evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
+  # Broken stick model
+  n = length(ev)  
+  bsm = data.frame(j=seq(1:n), p=0)  
+  bsm$p[1] = 1/n  
+  for (i in 2:n) bsm$p[i] = bsm$p[i-1] + (1/(n + 1 - i))  
+  bsm$p = 100*bsm$p/n  
+  # Plot eigenvalues and % of variation for each axis  
+  op = par(mfrow=c(2,1),omi=c(0.1,0.3,0.1,0.1), mar=c(1, 1, 1, 1))  
+  barplot(ev, main="Valores propios", col="bisque", las=2)  
+  abline(h=mean(ev), col="red")  
+  legend("topright", "Valor propio medio", lwd=1, col=2, bty="n")  
+  barplot(t(cbind(100*ev/sum(ev), bsm$p[n:1])), beside=TRUE,   
+          main="% Inercia", col=c("bisque",2), las=2)  
+  legend("topright", c("% Valor propio", "Criterio Broken Stick"),   
+         pch=15, col=c("bisque",2), bty="n")  
+  par(op)  
+} 
+evplot()
 ```
+
+La pérdida de información en caso de trabajar con el plano principal sería de 36.7% con respecto a la nube de datos original, mientras que considerar 4 implica perder únicamente 13.8%.
+
+Una vez determinado, de forma preliminar, la dimensión en que se trabajará, realizamos el cálculo de componentes y su presentación gráfica. 
+
+Desde la perspectiva de las variables, encontramos que las variables mejor representadas ($|\rho| \geq 0.6$) por las dimensiones elegidas son (en orden descendente):
+
+* Dimensión 1: Oferta de energía secundaria per-cápita, consumo neto de electricidad per-cápita, consumo residencial de energía, consumo energético final per-cápita, y el Producto Bruto Interno per-cápita, consumo de energía del sector transporte, oferta de energía primaria per- cápita, consumo industrial de energía. \
+* Dimensión 2: Productividad industrial energética, productividad energética. \
+* Dimensión 3: Emisión de CO2 por unidad de consumo energético, emisión de CO2 per-cápita. \
+* Dimensión 4: Proporción de energía importada sobre el total de la oferta. \
+
+Resulta claro entonces que el tercer componente representará la *dimensión ambiental*, la cuarta representa la *dimensión política* (autarquía política dada por el nivel de dependencia energético), mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*.
+
+Visualizamos en los correspondientes círculos de correlaciones:
+
+
+```{r, fig.cap= "Dimensiones 1 y 2."}
+plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Círculo de correlaciones")
+```
+
+
+```{r,fig.cap= "Dimensiones 3 y 4."}
+plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones")
+```
+
+Las totalidad de las variables se encuentran bien representadas al tener en cuenta 4 dimensiones.
+
+En lo que respecta a los individuos (Países):
+
+```{r, fig.cap="Dimensiones 1 y 2."}
+plot.PCA(res.pca1984,habillage='co2',title="Gráfico perspectiva de Países",col.ind='#ED1536')
+```
+
+Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
+
+* Dimensión 1: Haití, Nicaragua, El Salvador, Guatemala, México, Argentina, Trinidad y Tobago. \
+* Dimensión 2: Uruguay, Guyana. \ 
+
+
+```{r, fig.cap="Dimensiones 3 y 4."}
+plot.PCA(res.axes=c(3,4),pca1984,habillage='co2',title="Gráfico perspectiva de Países",col.ind='#ED1536')
+```
+
+Las dimensiones 3 y 4 no representan lo suficiente a ningún país.
+
+>Evaluar en conjunto variables/paises. Armar los clusters y sacar conclusiones para el 84.
+
+>Hacer exactamente lo mismo para el 96, sólo hay que copiar y pegar el mismo código y ver si hay cambios importantes a destacar o no.
 
 
 
