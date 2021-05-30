@@ -285,17 +285,17 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 
 ### Caracterización de países
 
-Grupo 1: 
-- valores altos de proporción de consumo energético residencial. \
-- valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per capita, productividad energética, consumo energético final per-cápita, productividad industrial, y la oferta de energía primaria. \
+**Grupo 1: **
+* Valores altos de proporción de consumo energético residencial. \
+* Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per capita, productividad energética, consumo energético final per-cápita, productividad industrial, y la oferta de energía primaria. \
          
-Grupo 2: 
-- valores altos de proporción de consumo de energía secundaria, productividad energética, proporción de consumo eléctrico del sector transporte, productividad industrial, oferta de energía secundaria, PBI per cápita. \
-- valores bajos de la proporción de consumo eneregético residencial. \
+**Grupo 2:** 
+* Valores altos de proporción de consumo de energía secundaria, productividad energética, proporción de consumo eléctrico del sector transporte, productividad industrial, oferta de energía secundaria, PBI per cápita. \
+* Valores bajos de la proporción de consumo energético residencial. \
 
-Grupo 3:
-- valores altos de oferta de energía primaria, consumo energético final per-cápita, consumo eléctrico per cápita, proporción de consumo energético industrial, y la oferta de energía secundaria. \
-- valore bajos de la proporción de consumo eneregético residencial. \
+**Grupo 3:**
+* Valores altos de oferta de energía primaria, consumo energético final per-cápita, consumo eléctrico per cápita, proporción de consumo energético industrial, y la oferta de energía secundaria. \
+* Valores bajos de la proporción de consumo energético residencial. \
 
 |             | **Países**                                                                                                 |
 |:-----------:|:-----------------------------------------------------------------------------------------------------------|
@@ -436,16 +436,16 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 
 ### Caracterización de países
 
-Grupo 1: 
-- valores altos de proporción de consumo energético residencial.
-- valores bajos de consumo eléctrico per capita, oferta de energía secundaria per cápita, PBI per-cápita, consumo energético final per-cápita, proporción de consumo de energía secundaria per-cápita, emisión de CO2 per-cápita, propoerción de consumo energético industrial, del sector transporte, y la productividad energética.
+**Grupo 1: **
+* Valores altos de proporción de consumo energético residencial. \
+* Valores bajos de consumo eléctrico per capita, oferta de energía secundaria per cápita, PBI per-cápita, consumo energético final per-cápita, proporción de consumo de energía secundaria per-cápita, emisión de CO2 per-cápita, proporción de consumo energético industrial, del sector transporte, y la productividad energética. \
          
-Grupo 2: 
-- valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per cápita, proporción de consumo eléctrico del sector transporte, PBI per cápita, emisión de CO2 per cápita, y productividad energética.
-- valores bajos de la proporción de consumo eneregético residencial.
+**Grupo 2:** 
+* Valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per cápita, proporción de consumo eléctrico del sector transporte, PBI per cápita, emisión de CO2 per cápita, y productividad energética.\
+* Valores bajos de la proporción de consumo energético residencial.
 
-Grupo 3:
-- valores altos de oferta de energía primaria, consume energético per-cápita, y proporción de consumo energético industrial.
+**Grupo 3:**
+* Valores altos de oferta de energía primaria, consume energético per-cápita, y proporción de consumo energético industrial.\
 
 |             | **Países**                                                                                                    |
 |:-----------:|:--------------------------------------------------------------------------------------------------------------|
