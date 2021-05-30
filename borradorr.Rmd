@@ -287,7 +287,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 
 **Grupo 1: **
 * Valores altos de proporción de consumo energético residencial. \
-* Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per capita, productividad energética, consumo energético final per-cápita, productividad industrial, y la oferta de energía primaria. \
+* Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per cápita, productividad energética, consumo energético final per-cápita, productividad industrial, y la oferta de energía primaria. \
          
 **Grupo 2:** 
 * Valores altos de proporción de consumo de energía secundaria, productividad energética, proporción de consumo eléctrico del sector transporte, productividad industrial, oferta de energía secundaria, PBI per cápita. \
