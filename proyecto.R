@@ -51,7 +51,7 @@ Energia_st<-scale(Energia1[,2:15])
 #### VARIABLES
 
 summary(Energia1) #todas las variables son cuantitativas -> lo más útil será ACP
-
+by(Energia1[,2:15],Energia1[,16],summary) #no se  ven cambios importantes en Productividad, emisiones de Co2, etc.
 # Correlación 
 
 cor(Energia1[Energia1$Año==1984,2:15]) # Correlaciones altas en 1984: 
@@ -68,9 +68,19 @@ acp1996=PCA(Energia1[Energia1$Año==1996,c(2:15)])
 res.pca1984 = PCA(Energia1[Energia1$Año==1984,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
 resshiny1984 = PCAshiny(res.pca1984)
 
-plot.PCA(res.PCA,choix='var',habillage = 'contrib',title="Gráfico perspectiva de variables")
-plot.PCA(res.PCA,habillage='contrib',title="Gráfico perspectiva de países",col.ind='#ED1536')
-summary(res.PCA1996) # las dos primeras dimensiones sólo aportan un 63.3% de la varianza, con 3 se explica 76.18%
+plot.PCA(res.PCA,choix='var',habillage = 'cos2',title="Gráfico perspectiva de variables")
+plot.PCA(res.PCA,habillage='cos2',title="Gráfico perspectiva de países",col.ind='#ED1536')
+summary(res.PCA1996)
+res.pca1984$eig
+ggplot(a,aes(x=seq(1:14),y=eigenvalue))+
+  geom_line()+
+  geom_label(aes(label=round(`percentage of variance`,2)))+
+  labs(title = "Varianza explicada por cada dimensión",x="Número del valor propio", y="Valores propios")+
+  scale_x_continuous(breaks =seq(1:14))
+  
+a<-as.data.frame(res.pca1984$eig)
+
+# las dos primeras dimensiones sólo aportan un 63.3% de la varianza, con 3 se explica 76.18%
 ## VARIABLES
 # D1 correlacion alta con PBIpc(0.81) , O_SECpc(0.92), XC_RES(-0.9) , CELECpc (0.92) , CONSENpc (0.85)
 # D2 correlacion alta con Prod_Ind (0.85)
@@ -95,3 +105,26 @@ summary(res.pca1996)
 acp=PCA(Energia1[Energia1$Año==1993,c(2:15)])
 res.pca = PCA(Energia1[Energia1$Año==1993,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
 resshiny = PCAshiny(res.pca)
+
+
+evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
+  # Broken stick model (MacArthur 1957)  
+  n = length(ev)  
+  bsm = data.frame(j=seq(1:n), p=0)  
+  bsm$p[1] = 1/n  
+  for (i in 2:n) bsm$p[i] = bsm$p[i-1] + (1/(n + 1 - i))  
+  bsm$p = 100*bsm$p/n  
+  # Plot eigenvalues and % of variation for each axis  
+  op = par(mfrow=c(2,1),omi=c(0.1,0.3,0.1,0.1), mar=c(1, 1, 1, 1))  
+  barplot(ev, main="Valores propios", col="bisque", las=2)  
+  abline(h=mean(ev), col="red")  
+  legend("topright", "Valor propio medio", lwd=1, col=2, bty="n")  
+  barplot(t(cbind(100*ev/sum(ev), bsm$p[n:1])), beside=TRUE,   
+          main="% Inercia", col=c("bisque",2), las=2)  
+  legend("topright", c("% Valor propio", "Criterio Broken Stick"),   
+         pch=15, col=c("bisque",2), bty="n")  
+  par(op)  
+} 
+evplot()
+
+evplot(aa$values)
