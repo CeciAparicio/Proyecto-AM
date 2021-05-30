@@ -236,7 +236,7 @@ Una vez determinado, de forma preliminar, la dimensión en que se trabajará, re
 
 Desde la perspectiva de las variables, encontramos que las variables mejor representadas ($|\rho| \geq 0.6$) por las dimensiones elegidas son (en orden descendente):
 
-* Dimensión 1: Oferta de energía secundaria per-cápita, consumo neto de electricidad per-cápita, consumo residencial de energía, consumo energético final per-cápita, y el Producto Bruto Interno per-cápita, consumo de energía del sector transporte, oferta de energía primaria per- cápita, consumo industrial de energía. \
+* Dimensión 1: Oferta de energía secundaria per-cápita, consumo neto de electricidad per-cápita, consumo residencial de energía, consumo energético final per-cápita, Producto Bruto Interno per-cápita, consumo de energía del sector transporte, oferta de energía primaria per- cápita, consumo industrial de energía. \
 * Dimensión 2: Productividad industrial energética, productividad energética. \
 * Dimensión 3: Emisión de CO2 por unidad de consumo energético, emisión de CO2 per-cápita. \
 * Dimensión 4: Proporción de energía importada sobre el total de la oferta. \
@@ -249,19 +249,19 @@ Visualizamos en los correspondientes círculos de correlaciones:
 
 
 ```{r, fig.cap= "Dimensiones 1 y 2."}
-plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Círculo de correlaciones")
+plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1984")
 ```
 
 
 ```{r,fig.cap= "Dimensiones 3 y 4."}
-plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones")
+plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1984")
 ```
 
 
 En lo que respecta a los individuos (Países):
 
 ```{r, fig.cap="Dimensiones 1 y 2."}
-plot.PCA(res.pca1984,choix = "ind",title="Gráfico perspectiva de Países",col.ind='#ED1536')
+plot.PCA(res.pca1984,choix = "ind",title="Gráfico perspectiva de Países 1984",col.ind='#ED1536')
 ```
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
@@ -271,7 +271,7 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 
 
 ```{r, fig.cap="Dimensiones 3 y 4."}
-plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países",col.ind='#ED1536')
+plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países 1984",col.ind='#ED1536')
 ```
 
 Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
@@ -283,10 +283,6 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 
 
 >Evaluar en conjunto variables/paises. Armar los clusters y sacar conclusiones para el 84.
-
->Hacer exactamente lo mismo para el 96, sólo hay que copiar y pegar el mismo código y ver si hay cambios importantes a destacar o no.
-
-
 
 
 ```{r summary de ACP, va en anexos}
@@ -362,32 +358,26 @@ Una vez determinado, de forma preliminar, la dimensión en que se trabajará, re
 
 Desde la perspectiva de las variables, encontramos que las variables mejor representadas ($|\rho| \geq 0.6$) por las dimensiones elegidas son (en orden descendente):
 
-* Dimensión 1: Consumo neto de electricidad per-cápita, oferta de energía secundaria per-cápita, consumo residencial de energía, el Producto Bruto Interno per-cápita, consumo energético final, y el Producto Bruto Interno per-cápita. \
+* Dimensión 1: Consumo neto de electricidad per-cápita, oferta de energía secundaria per-cápita, consumo residencial de energía, Producto Bruto Interno per-cápita, consumo energético final. \
 * Dimensión 2: Productividad energética, productividad industrial, emisión de Co2 por unidad energética  de consumo, oferta de energía primaria per-cápita, proporción del consumo energético del sector transporte, proporción del consumo energético del sector industrial, proporción del consumo de energía secundaria. \
 * Dimensión 3: Emisión de CO2 por unidad de consumo energético, emisión de CO2 per-cápita. \
 * evaluar incluir la 4ta acá
 
-El tercer componente, al igual que en 1984, representa la *dimensión ambiental*, mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*. Estas últimas dos dimensiones están altamente vinculadas, y comparten correlaciones elevadas para variables comunes. >>ver por qué se da esto
+El tercer componente, al igual que en 1984, representa la *dimensión ambiental*, mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*. 
+En comparación con 1984, muchas de las variables que habían sido agrupadas en la dimensión social, ahora lo hacen en la dimensión económica, algunas de ellas relacionadas en sentido opuesto (correlación negativa con el eje): consumo energético final per-cápita, oferta de energía primaria per-cápita, y la proporción de consumo energético industrial.
 
-A su vez, entendemos que las dimensiones más relevante son la social y la económica, dado que son las que explican en mayor medida las variaciones de los datos. En lo que respecta a la dimensión ambiental y política, no hay variaciones significativas en los datos.Siendo así, podemos restringir el análisis al plano principal por mayor practicidad, donde estaríamos prescindiendo principalmente, del aporte de las variables Importaciones y emisión de CO2 per cápita.
+El conjunto de dimensiones más relevante sigue siendo la social y la económica, incluso con un leve aumento de su pdoer explicativo en comparación con 1984. 
 
 Visualizamos en los correspondientes círculos de correlaciones:
 
 
 ```{r, fig.cap= "Dimensiones 1 y 2."}
-plot.PCA(res.pca1996,choix='var',habillage = 'contrib',title="Círculo de correlaciones")
+plot.PCA(res.pca1996,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1996")
 ```
 
 
 ```{r,fig.cap= "Dimensiones 3 y 4."}
-plot.PCA(res.pca1996,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones")
-```
-
-
-
-
-```{r, fig.cap="Dimensiones 1 y 2."}
-plot.PCA(res.PCA1996,habillage='cos2')
+plot.PCA(res.pca1996,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1996")
 ```
 
 
