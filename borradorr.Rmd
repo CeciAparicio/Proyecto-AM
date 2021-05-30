@@ -4,12 +4,12 @@ author: "Cecilia Aparicio"
 date: "Mayo 2021"
 number_sections: true
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE)
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center")
 ``` 
 
 ```{r}
@@ -204,7 +204,7 @@ ggplot(vp84,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
 ```
 
 
-Por otra parte, siguiendo el criterio *"Broken-sitcks"*, que sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en $p$ partes. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes:
+Por otra parte, siguiendo el criterio *"Broken-sitcks"*, que sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en $p$ partes. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes, aunque la diferencia entre la inercia explicada por los componentes y la explicada de forma "aleatoria" en los componentes 3 y 4, no difieren demasiado. Por ende, podemos pensar que la "información real" está mayormente captada por los dos primeros componentes.
 
 
 ```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE}
@@ -261,7 +261,7 @@ plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círcu
 En lo que respecta a los individuos (Países):
 
 ```{r, fig.cap="Dimensiones 1 y 2."}
-plot.PCA(res.pca1984,choix = "ind",title="Gráfico perspectiva de Países 1984",col.ind='#ED1536')
+plot.PCA(res.pca1984,choix = "ind",title="Gráfico perspectiva de Países 1984",habillage = "co2")
 ```
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
@@ -271,7 +271,7 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 
 
 ```{r, fig.cap="Dimensiones 3 y 4."}
-plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países 1984",col.ind='#ED1536')
+plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países 1984",habillage = "co2")
 ```
 
 Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
@@ -281,8 +281,30 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Dimensión 1 + Dimensión 4: Barbados, Cuba. \
 * Dimensión 3 + Dimensión 4: Panamá. \
 
+### Caracterización de países
 
->Evaluar en conjunto variables/paises. Armar los clusters y sacar conclusiones para el 84.
+Grupo 1: 
+- valores altos de proporción de consumo energético residencial. \
+- valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per capita, productividad energética, consumo energético final per-cápita, productividad industrial, y la oferta de energía primaria. \
+         
+Grupo 2: 
+- valores altos de proporción de consumo de energía secundaria, productividad energética, proporción de consumo eléctrico del sector transporte, productividad industrial, oferta de energía secundaria, PBI per cápita. \
+- valores bajos de la proporción de consumo eneregético residencial. \
+
+Grupo 3:
+- valores altos de oferta de energía primaria, consumo energético final per-cápita, consumo eléctrico per cápita, proporción de consumo energético industrial, y la oferta de energía secundaria. \
+- valore bajos de la proporción de consumo eneregético residencial. \
+
+|             | **Países**                                                                                                 |
+|:-----------:|:-----------------------------------------------------------------------------------------------------------|
+|**Grupo 1**  | El Salvador, Guatemala, Guyana, Haití, Honduras, Nicaragua, Paraguay, Rep. Dominicana, Costa Rica, Bolivia |
+|**Grupo 2**  | Argentina, Barbados, Cuba, Ecuador, México, Perú, Jamaica, Uruguay, Brasil, México, Panamá                 |
+|**Grupo 3**  | Trinidad, Venezuela                                                                                        |
+
+```{r}
+
+```
+
 
 
 ```{r summary de ACP, va en anexos}
@@ -309,7 +331,7 @@ kable(cor(Energia1[Energia1$Año==1996,2:15])) %>%
 ```
 
 
-Para el año 1996, observamos que se mantienen las correlaciones altas (>0.80) detectadas por 1984. Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
+Para el año 1996, observamos que se mantienen las correlaciones altas (>0.70) detectadas para 1984. Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
 
 ### Análisis de componentes principales para 1984
 
@@ -333,7 +355,7 @@ La variabilidad de los datos es captada en un 41.17% por el primer eje de inerci
 kable(vp96,booktabs=TRUE)
 ```
 
-```{r plot eigen84}
+```{r plot eigen96}
 vp96<-cbind.data.frame(vp96,res.pca1996[["eig"]][,3])
 colnames(vp96)=c("Valores propios","% acumulado de varianza")
 ggplot(vp96,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
@@ -344,10 +366,10 @@ ggplot(vp96,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
 ```
 
 
-El criterio *"Broken-sitcks"* en cambio, sugiere retener 3 componentes:
+El criterio *"Broken-sitcks"* en cambio, sugiere retener en el enotrno de 2-3 componentes:
 
 
-```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE}
+```{r criterio BS 1996, fig.="Criterio Broken-sticks para la elección de componentes",cache=TRUE}
 evplot(vp96[,1])
 ```
 
@@ -372,19 +394,19 @@ Visualizamos en los correspondientes círculos de correlaciones:
 
 
 ```{r, fig.cap= "Dimensiones 1 y 2."}
-plot.PCA(res.pca1996,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1996")
+plot.PCA(res.pca1996,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1996",select='cos2  0.6',unselect=0)
 ```
 
 
 ```{r,fig.cap= "Dimensiones 3 y 4."}
-plot.PCA(res.pca1996,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1996")
+plot.PCA(res.pca1996,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1996",select='cos2  0.6',unselect=0)
 ```
 
 
 En lo que respecta a los individuos (Países):
 
 ```{r, fig.cap="Dimensiones 1 y 2."}
-plot.PCA(res.pca1996,choix = "ind",title="Gráfico perspectiva de Países",col.ind='#ED1536')
+plot.PCA(res.pca1996,habillage = "cos2",title="Gráfico perspectiva de Países",,select='cos2  0.5')
 ```
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
@@ -394,13 +416,31 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 
 
 ```{r, fig.cap="Dimensiones 3 y 4."}
-plot.PCA(res.pca19966,axes=c(3,4),title="Gráfico perspectiva de Países",col.ind='#ED1536')
+plot.PCA(res.pca1996,axes=c(3,4),title="Gráfico perspectiva de Países",habillage = "cos2")
 ```
 
-Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
+Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio, diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
 
 * Plano principal: Brasil, Honduras, Venezuela.
 * Dimensión 1 + Dimensión 3: Paraguay, Bolivia, Brasil, Cuba.
 * Dimensión 1 + Dimensión 4: Barbados, Cuba.
 * Dimensión 3 + Dimensión 4: Panamá.
 
+### Caracterización de países
+
+Grupo 1: 
+- valores altos de proporción de consumo energético residencial.
+- valores bajos de consumo eléctrico per capita, oferta de energía secundaria per cápita, PBI per-cápita, consumo energético final per-cápita, proporción de consumo de energía secundaria per-cápita, emisión de CO2 per-cápita, propoerción de consumo energético industrial, del sector transporte, y la productividad energética.
+         
+Grupo 2: 
+- valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per cápita, proporción de consumo eléctrico del sector transporte, PBI per cápita, emisión de CO2 per cápita, y productividad energética.
+- valores bajos de la proporción de consumo eneregético residencial.
+
+Grupo 3:
+- valores altos de oferta de energía primaria, consume energético per-cápita, y proporción de consumo energético industrial.
+
+|             | **Países**                                                                                                    |
+|:-----------:|:--------------------------------------------------------------------------------------------------------------|
+|**Grupo 1**  | El Salvador, Guatemala, Guyana, Haití, Honduras, Nicaragua, Paraguay, Perú, Ecuador, Bolivia, Rep. Dominicana |
+|**Grupo 2**  | Argentina, Barbados, Cuba, Venezuela, Jamaica, Uruguay, Brasil, Chile, México, Costa Rica, Panamá,            |
+|**Grupo 3**  | Trinidad                                                                                                      |
