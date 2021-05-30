@@ -193,7 +193,7 @@ colnames(vp84)="Valores propios"
 kable(vp84,booktabs=TRUE)
 ```
 
-```{r plot eigen84}
+```{r plot eigen84,out.width="80%"}
 vp84<-cbind.data.frame(vp84,res.pca1984[["eig"]][,3])
 colnames(vp84)=c("Valores propios","% acumulado de varianza")
 ggplot(vp84,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
@@ -204,10 +204,10 @@ ggplot(vp84,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
 ```
 
 
-Por otra parte, siguiendo el criterio *"Broken-sitcks"*, que sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en $p$ partes. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes, aunque la diferencia entre la inercia explicada por los componentes y la explicada de forma "aleatoria" en los componentes 3 y 4, no difieren demasiado. Por ende, podemos pensar que la "información real" está mayormente captada por los dos primeros componentes.
+Por otra parte, el criterio *"Broken-sitcks"*, sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en $p$ partes aleatorias. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes, aunque la diferencia entre la inercia explicada por los componentes y la explicada de forma "aleatoria" en los componentes 3 y 4, no difieren demasiado. Por ende, podemos pensar que la "información real" está mayormente captada por los dos primeros componentes.
 
 
-```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE}
+```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE,out.width="80%"}
 evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
   # Broken stick model
   n = length(ev)  
@@ -248,20 +248,20 @@ A su vez, entendemos que las dimensiones más relevante son la social y la econ�
 Visualizamos en los correspondientes círculos de correlaciones:
 
 
-```{r, fig.cap= "Dimensiones 1 y 2."}
-plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1984")
+```{r, fig.cap= "Dimensiones 1 y 2.",out.width="80%"}
+plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1984",select='cos2  0',unselect=0)
 ```
 
 
-```{r,fig.cap= "Dimensiones 3 y 4."}
-plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1984")
+```{r,fig.cap= "Dimensiones 3 y 4.",out.width="80%"}
+plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1984",select='cos2  0',unselect=0)
 ```
 
 
 En lo que respecta a los individuos (Países):
 
-```{r, fig.cap="Dimensiones 1 y 2."}
-plot.PCA(res.pca1984,choix = "ind",title="Gráfico perspectiva de Países 1984",habillage = "co2")
+```{r, fig.cap="Dimensiones 1 y 2.", out.width="80%"}
+plot.PCA(res.pca1984,title="Gráfico perspectiva de Países 1984",habillage = 'cos2')
 ```
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
@@ -270,8 +270,8 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 * Dimensión 2: Uruguay, Guyana. \ 
 
 
-```{r, fig.cap="Dimensiones 3 y 4."}
-plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países 1984",habillage = "co2")
+```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
+plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países 1984",habillage = 'cos2')
 ```
 
 Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
@@ -307,14 +307,14 @@ Grupo 3:
 
 
 
-```{r summary de ACP, va en anexos}
+```{r summary de ACP, va en anexos,include=FALSE}
 summary(res.pca1984)
 ```
 
 
 \
 
-```{r summary de las variables originales va en anexos}
+```{r summary de las variables originales va en anexos, include=FALSE}
 (summary(Energia1[,2:15]))
 ```
 
@@ -355,7 +355,7 @@ La variabilidad de los datos es captada en un 41.17% por el primer eje de inerci
 kable(vp96,booktabs=TRUE)
 ```
 
-```{r plot eigen96}
+```{r plot eigen96,out.width="80%"}
 vp96<-cbind.data.frame(vp96,res.pca1996[["eig"]][,3])
 colnames(vp96)=c("Valores propios","% acumulado de varianza")
 ggplot(vp96,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
@@ -369,7 +369,7 @@ ggplot(vp96,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
 El criterio *"Broken-sitcks"* en cambio, sugiere retener en el enotrno de 2-3 componentes:
 
 
-```{r criterio BS 1996, fig.="Criterio Broken-sticks para la elección de componentes",cache=TRUE}
+```{r criterio BS 1996, fig.="Criterio Broken-sticks para la elección de componentes",cache=TRUE, out.width="80%"}
 evplot(vp96[,1])
 ```
 
@@ -393,20 +393,20 @@ El conjunto de dimensiones más relevante sigue siendo la social y la económica
 Visualizamos en los correspondientes círculos de correlaciones:
 
 
-```{r, fig.cap= "Dimensiones 1 y 2."}
+```{r, fig.cap= "Dimensiones 1 y 2.",out.width="80%"}
 plot.PCA(res.pca1996,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1996",select='cos2  0.6',unselect=0)
 ```
 
 
-```{r,fig.cap= "Dimensiones 3 y 4."}
+```{r,fig.cap= "Dimensiones 3 y 4.",out.width="80%"}
 plot.PCA(res.pca1996,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1996",select='cos2  0.6',unselect=0)
 ```
 
 
 En lo que respecta a los individuos (Países):
 
-```{r, fig.cap="Dimensiones 1 y 2."}
-plot.PCA(res.pca1996,habillage = "cos2",title="Gráfico perspectiva de Países",,select='cos2  0.5')
+```{r, fig.cap="Dimensiones 1 y 2.",out.width="80%"}
+plot.PCA(res.pca1996,habillage = "cos2",title="Gráfico perspectiva de Países",select='cos2  0.5')
 ```
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
@@ -415,7 +415,7 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 * Dimensión 2: Uruguay, Guyana. \ 
 
 
-```{r, fig.cap="Dimensiones 3 y 4."}
+```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
 plot.PCA(res.pca1996,axes=c(3,4),title="Gráfico perspectiva de Países",habillage = "cos2")
 ```
 
