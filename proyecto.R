@@ -61,11 +61,11 @@ cor(Energia1[Energia1$Año==1996,2:15]) # Correlaciones altas en 1996:
 #Prod_Ene-PBIpc 0.810985198; ConsENpc-O_PRIpc 0.915940442  ;ConsENpc_C - X.C_IND 0.890504571  ; X-C_SEC-X.C_TRAN 0.85696498 
 #
 #
-acp1984=PCA(Energia1[Energia1$Año==1984,c(2:15)])
-acp1996=PCA(Energia1[Energia1$Año==1996,c(2:15)])
+acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
+acp1996=PCA(Energia_st[Energia_st$Año==1996,c(4:17)])
 
 
-res.pca1984 = PCA(Energia1[Energia1$Año==1984,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
+res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
 resshiny1984 = PCAshiny(res.pca1984)
 
 plot.PCA(res.PCA,choix='var',habillage = 'cos2',title="Gráfico perspectiva de variables")
@@ -94,17 +94,12 @@ a<-as.data.frame(res.pca1984$eig)
 # D4 con D1 mejora representación de Barbados y Cuba
 
 
-res.pca1996 = PCA(Energia1[Energia1$Año==1996,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
+res.pca1996 = PCA(Energia_st[Energia_st$Año==1996,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
 resshiny1996 = PCAshiny(res.pca1996)
 
 plot.PCA(res.PCA,choix='var',habillage = 'contrib',title="Gráfico perspectiva variables")
 plot.PCA(res.PCA,habillage='contrib',title="Gráfico perspectiva de países")
 summary(res.pca1996)
-
-
-acp=PCA(Energia1[Energia1$Año==1993,c(2:15)])
-res.pca = PCA(Energia1[Energia1$Año==1993,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
-resshiny = PCAshiny(res.pca)
 
 
 evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
@@ -128,3 +123,10 @@ evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
 evplot()
 
 evplot(aa$values)
+
+hcpc1984<-HCPC(acp1984, graph = FALSE)
+fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
+             show.clust.cent = TRUE, # Show cluster centers
+             palette = "jco",         # Color palette see ?ggpubr::ggpar
+             ggtheme = theme_minimal(),
+             main = "Caracterización de países para 1984")
