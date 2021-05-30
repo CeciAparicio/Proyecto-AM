@@ -2,6 +2,7 @@
 title: "Untitled"
 author: "Cecilia Aparicio"
 date: "Mayo 2021"
+number_sections: true
 output:
   pdf_document: default
   html_document: default
@@ -12,13 +13,13 @@ knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE)
 ``` 
 
 ```{r}
+library(tinytex)
 library(knitr)
-library(xtable)
 library(dplyr)
 library(FactoMineR)
 library(Factoshiny)
 library(stringr)
-library(car)
+library(xtable)
 library(kableExtra)
 library(rmarkdown)
 ```
@@ -27,32 +28,38 @@ library(rmarkdown)
 >introducir acá de qué se va a tratar el proyecto: estudio de principales variables que explican el desarrollo sustentable, comparación entre los 80 y los 90 para identificar cambios que sean indicios de avance en la aplicación de politicas energeticas que favorezcan la sustentabilidad del desarrolloetc etc etc##.
 
 ### Desarrollo sustentable
-\
+
+
 Def de desarrollo sustentable: desarrollo que distribuye más equitativamente los beneficios del progreso económico, protege al medioambiente nacional y mundial en beneficio de las futuras generaciones y mejore genuinamente la calidad de vida.
-\
+
+
 Existe un fuerte vínculo entre el desarrollo y la energía, siendo este último un insumo fundamental para ello. Sin embargo, debe prestarse especial atención al efecto negativo que puede tener tal desarrollo en el medioambiente, y por tanto, en la disponibilidad futura de recursos energéticos. Aquí es donde entre en juego la noción de sustentabilidad.
-\
+
+
 El estudio del desarrollo sustentable entonces, deberá contemplar varias aristas. Desde la CEPAL(1997) se sugiere focalizarse en la dimensión *política, económica, social, y ambiental*. Dada la complejidad de las mismas, no pueden medirse directamente a través de un único indicador.
 
-*"Clasificar países respecto a un tema multidimensional como el desarrollo sustentable es una tarea compleja, que involucra una cantidad de juicios de valor de distintos niveles, muchas veces implícitos en la selección de indicadores, su normalización, la valoración relativa, etc."* (OLADE/CEPAL/GTZ, 1997). 
+
+>*"Clasificar países respecto a un tema multidimensional como el desarrollo sustentable es una tarea compleja, que involucra una cantidad de juicios de valor de distintos niveles, muchas veces implícitos en la selección de indicadores, su normalización, la valoración relativa, etc."* (OLADE/CEPAL/GTZ, 1997). 
+
 
 En este trabajo se intentará superar tales dificultades.
-\
+
 Nos basaremos en el estudio realizado por OLADE, CEPAL, y GTZ "....inserte nombre aki" , a los efectos de identificar posibles relaciones entre la situación energética y la sustentabilidad de cada país. Además, se buscarán posibles cambios que se hayan dado en el tiempo de estas relaciones, que evidencien un avance en el desarrollo sustentable entre la década de los 80 y 90. Para ello, compararemos datos del año 1984 y 1996.
-\
+
 
 ## Patrones de situación energética en AL
-\
+
 En el análisis de la sustentabilidad a nivel regional, CEPAL/OLADE/GTZ (1997) define cuatro patrones:
-\
-**A)** Alto ingreso medio, moderada desigualdad social, baja integración productiva, fuerte dependencia de exportaciones energéticas. \
+
+
+**A)** Alto ingreso medio, moderada desigualdad social, baja integración productiva, fuerte dependencia de exportaciones energéticas.\
 **B)** Alta o moderada integración y diversificación productiva con gran absorción interna, marcada o moderada diferenciación social, importante base de recursos naturales, autosuficientes o moderadamente independientes de las importaciones energéticas. \
 **C)** Moderada o alta integración y diversificación productiva interna, desigualdad social atenuada, exportaciones diversificadas basadas en recursos naturales. \
 **D)** Bajo nivel de desarrollo relativo basado en recursos naturales y exportación de productos primarios/mineros/energéticos. \
 **E)** Bajo o muy bajo grado de desarrollo, con reducida dotación de recursos naturales. \
 
 La clasificación realizada por los autores fue la siguiente:
-\
+
 
 | **Clasificación** | **Países**                                                               |  
 |:-----------------:|:------------------------------------------------------------------------:| 
@@ -63,24 +70,29 @@ La clasificación realizada por los autores fue la siguiente:
 | E                 | Guatemala, Honduras, República Dominicana, El Salvador, Granada, Haití   | 
 >Ver cómo se relaciona esta clasificación con la anterior.
 
+
 ### Indicadores:
-\
+
+
 * Dimensión política: la autarquía energética (% importaciones de energía) \
-* Dimensión económica: productividad energética e industrial, calidad del suministro eléctrico, intensidad energética, uso racional de la energía en sectores productivos, (Prod_Ind, Prod_Ene, C_IND, C_trans, O_pripc, O_SECpc, ConsENpc)
+* Dimensión económica: productividad energética e industrial, calidad del suministro eléctrico, intensidad energética, uso racional de la energía en sectores productivos, (Prod_Ind, Prod_Ene, C_IND, C_trans, O_pripc, O_SECpc, ConsENpc) \
 * Dimensión social: cobertura de necesidades básicas de energía eléctrica en los hogares,consumo neto de electricidad de la poblacion , nivel de ingresos (%consumo de energía residencial, PBI pc , C_ELEC_pc) \
 * Ambiental: nivel de emisión de CO2 \
-\
+
 
 ## Patrones relacionados a las dimensiones de sustentabilidad en AL
-\
+
+
 Teniendo en cuenta los indicadores antes mencionados, la evaluación de ellos en la región llevaron a la conformación de 4 grandes "bloques" con 2 sub-bloques cada uno, que comparten distintas características.
-\
-```{r Cuadro1, fig.align = 'center', out.width="80%",fig.cap = "Cuadro extraído de Energía y desarrollo sustentable en América Latina y El Caribe. OLADE/CEPAL/GTZ, 1997."}
+
+
+```{r Cuadro1, fig.align = 'center', out.width="90%",fig.cap = "Cuadro extraído de Energía y desarrollo sustentable en América Latina y El Caribe. OLADE/CEPAL/GTZ, 1997."}
 knitr::include_graphics(here::here("patrones.png"))
 ```
-\
+
+
 Se observa que existen ciertas correspondencias entre los patrones aquí detallados y los de situación energética, algunos más claros que otros.
-\
+
 
 |Grupo Situación        | Grupo Sustentabilidad |
 |:---------------------:|:---------------------:|
@@ -90,6 +102,7 @@ Se observa que existen ciertas correspondencias entre los patrones aquí detalla
 | IV                    | C,D,E                 |
 
 > En estos patrones nos vamos a basar para reproducrilo con ACP y comparar los cambios entre el 84 y el 96
+
 
 Contamos con información de 24 países y 14 variables para examinar, todas ellas cuantitativas, por lo que se procede a realizar un Análisis de Componentes Principales (ACP).
 Como primer paso, y de acuerdo a lo sugerido, se estandarizan las variables por practicidad.
@@ -112,66 +125,71 @@ Energia_st<-cbind(Energia1[,c(1,16,17)],scale(Energia1[,2:15]))
 rownames(Energia_st)=Energia_st$PAISES
 rownames(Energia1)=Energia1$PAISES
 ```
-\
 
-#### Países y rango de años contenidos en los datos:
 
-\ 
+#### Países contenidos en los datos:
+
+
 ```{r}
 kable(unique(pais), booktabs=TRUE)
-kable(unique(anio), booktabs=TRUE) %>% 
-  kable_styling(full_width= TRUE)
 ```
-\
 
-#### Datos:
 
-\
+####**Datos**
+
+
+Primeras 5 filas:
+
+
 ```{r}
-kable(Energia1[,2:15],booktabs=TRUE) %>% 
-  kable_styling(latex_options="scale_down")
+kable(head(Energia1[,2:15]),booktabs=TRUE, format="latex") %>% 
+ scroll_box(width="100%")
 ```
-\
 
-#### Datos estandarizados:
 
-\
+#### **Datos estandarizados**
+
+Primeras 5 filas:
+
+
 ```{r}
-kable(Energia_st[4:17]) %>% 
-  kable_styling(latex_options = "scale_down")
+kable(head(Energia_st[4:17])) %>% 
+  kable_styling(full_width = F, fixed_thead = T)
 ```
+
 
 ## Situación regional en 1984
 
-\
+
 Matriz de correlaciones entre variables:
-\
+
+
 ```{r correlaciones 1984}
-kable(cor(Energia1[2:15]),booktabs=TRUE) %>% 
-  kable_styling(latex_options = "scale_down")
+kable(cor(Energia1[2:15])) %>% 
+  kable_styling(full_width = F, fixed_thead = T)
 ```
 
-\
+
 Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos. Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
-\
 
 
 ```{r,include=FALSE}
 acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
 res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
 ```
-\
+
+
+
 ```{r}
 plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Gráfico perspectiva de las variables")
 
 ```
-\
+
+
+
 ```{r}
 plot.PCA(res.pca1984,habillage='contrib',title="Gráfico perspectiva de países",col.ind='#ED1536')
 ```
-\
-
-
 
 
 
@@ -185,6 +203,6 @@ summary(res.pca1984)
 
 \
 
-```{r summary de las variables originales va en anexos, results='asis'}
-kable(summary(Energia1[,2:15]))
+```{r summary de las variables originales va en anexos}
+(summary(Energia1[,2:15]))
 ```
