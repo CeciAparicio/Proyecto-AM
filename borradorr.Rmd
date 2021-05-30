@@ -21,6 +21,7 @@ library(stringr)
 library(xtable)
 library(kableExtra)
 library(rmarkdown)
+library(factoextra)
 ```
 ## Resumen ejecutivo
 
@@ -302,8 +303,14 @@ Grupo 3:
 |**Grupo 2**  | Argentina, Barbados, Cuba, Ecuador, México, Perú, Jamaica, Uruguay, Brasil, México, Panamá                 |
 |**Grupo 3**  | Trinidad, Venezuela                                                                                        |
 
-```{r}
+```{r,out.width="80%"}
 
+hcpc1984<-HCPC(acp1984, graph = FALSE)
+fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
+             show.clust.cent = TRUE, # Show cluster centers
+             palette = "jco",         # Color palette see ?ggpubr::ggpar
+             ggtheme = theme_minimal(),
+             main = "Caracterización de países para 1984")
 ```
 
 
@@ -445,3 +452,13 @@ Grupo 3:
 |**Grupo 1**  | El Salvador, Guatemala, Guyana, Haití, Honduras, Nicaragua, Paraguay, Perú, Ecuador, Bolivia, Rep. Dominicana |
 |**Grupo 2**  | Argentina, Barbados, Cuba, Venezuela, Jamaica, Uruguay, Brasil, Chile, México, Costa Rica, Panamá,            |
 |**Grupo 3**  | Trinidad                                                                                                      |
+```{r, out.width="80%"}
+
+hcpc1996<-HCPC(acp1996, graph = FALSE)
+fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
+             show.clust.cent = TRUE, # Show cluster centers
+             palette = "jco",         # Color palette see ?ggpubr::ggpar
+             ggtheme = theme_minimal(),
+             main = "Caracterización de países para 1996")
+```
+
