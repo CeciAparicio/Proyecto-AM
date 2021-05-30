@@ -8,7 +8,10 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
+```
+```{r}
+library(knitr)
 ```
 
 ##introducir acá de qué se va a tratar el proyecto: estudio de principales variables que explican el desarrollo sustentable, comparación entre los 80 y los 90 para identificar cambios que sean indicios de avance en el desarrollo de politicas energeticas etc etc etc##.
@@ -20,11 +23,15 @@ Def de desarrollo sustentable: desarrollo que distribuye más equitativamente lo
 Existe un fuerte vínculo entre el desarrollo y la energía, siendo este último un insumo fundamental para ello. Sin embargo, debe prestarse especial atención al efecto negativo que puede tener tal desarrollo en el medioambiente, y por tanto, en la disponibilidad futura de recursos energéticos. Aquí es donde entre en juego la noción de sustentabilidad.
 \
 El estudio del desarrollo sustentable entonces, deberá contemplar varias aristas. Desde la CEPAL(1997) se sugiere focalizarse en la dimensión *política, económica, social, y ambiental*. Dada la complejidad de las mismas, no pueden medirse directamente a través de un único indicador.
+
+*"Clasificar países respecto a un tema multidimensional como el desarrollo sustentable es una tarea compleja, que involucra una cantidad de juicios de valor de distintos niveles, muchas veces implícitos en la selección de indicadores, su normalización, la valoración relativa, etc."* (OLADE/CEPAL/GTZ, 1997). 
+
+Este trabajo se intentará superar tales dificultades.
 \
 
-## Patrones de desarrollo detectados en AL
+## Patrones de situación energética en AL
 \
-En el análisis de la sustentabilidad a nivel regional, OLADE (1997) define cuatro patrones:
+En el análisis de la sustentabilidad a nivel regional, CEPAL/OLADE/GTZ (1997) define cuatro patrones:
 \
 A) Alto ingreso medio, moderada desigualdad social, baja integración productiva, fuerte dependencia de exportaciones energéticas. \
 B) Alta o moderada integración y diversificación productiva con gran absorción interna, marcada o moderada diferenciación social, importante base de recursos naturales, autosuficientes o moderadamente independientes de las importaciones energéticas. \
@@ -42,9 +49,7 @@ La clasificación realizada por los autores fue la siguiente:
 | C                 | Colombia, Costa Rica, México, Panamá, Jamaica                            | 
 | D                 | Bolivia, Ecuador, Guyana, Nicaragua, Perú, Suriname, Cuba                | 
 | E                 | Guatemala, Honduras, República Dominicana, El Salvador, Granada, Haití   | 
-
-
-
+###Ver cómo se relaciona esta clasificación con la anterior.##
 
 ### Indicadores:
 \
@@ -54,22 +59,24 @@ La clasificación realizada por los autores fue la siguiente:
 * Ambiental: nivel de emisión de CO2 \
 \
 
-## Patrones relacionados a las dimensioens de sustentabilidad en AL
+## Patrones relacionados a las dimensiones de sustentabilidad en AL
 \
 Teniendo en cuenta los indicadores antes mencionados, la evaluación de ellos en la región llevaron a la conformación de 4 grandes "bloques" con 2 sub-bloques cada uno, que comparten distintas características.
 \
-
-| **Clasificación**   | **Países**                                                               | **Descripción**  
-|:-------------------:|:------------------------------------------------------------------------:|:------------------------------------------------------------------------| 
-| I.a                 | Venezuela, Trinidad y Tobago                                             | Mono exportadores                                                       |
-| I.b                 | Barbados                                                                 | Mono exportadores                                                       |
-| II.a                | Colombia, México                                                         | Exportadores de energía con cobertura eléctrica media-alta              |
-| II.b                | Bolivia, Ecuador, Perú                                                   | Exportadores de energía con cobertura eléctrica media-baja              |
-| III                 | Argentina, Brasil, Chile, Uruguay, Paraguay                              | Autoabastecidos con cobertura variable de elementos energéticos básicos |
-| III.a               | Costa Rica, Panamá, Jamaica                                              | Importadores con cobertura y requerimientos básicos media-alta          |
-| IV.b                | Guyana, Suriname, Nicaragua, Cuba                                        | Importadores con cobertura y requerimientos básicos media-baja          |
-| IV.c                | Guatemala, Honduras, República Dominicana, El Salvador, Haití, Granada   | Importadores con cobertura y requerimientos básicos baja                |
+```{r Cuadro1, fig.align = 'center', out.width="80%",fig.cap = "Cuadro extraído de Energía y desarrollo sustentable en América Latina y El Caribe. OLADE/CEPAL/GTZ, 1997."}
+knitr::include_graphics(here::here("patrones.png"))
+```
+\
+Se observa que existen ciertas correspondencias entre los patrones aquí detallados y los de situación energética, algunos más claros que otros.
+\
+|Grupo Situación| Grupo Sustentabilidad |
+|:-------------:|:---------------------:|
+| I             | A                     |
+| II            | C,D                   |
+| III           | B                     |
+| IV            | C,D,E                 |
 
 ###En estos patrones nos vamos a basar para reproducrilo con ACP y comparar los cambios entre el 84 y el 96###
-###Ver cómo se relaciona esta clasificación con la anterior.##
-  
+
+Nos basaremos en el estudio realizado por OLADE, CEPAL, y GTZ "....inserte nombre aki" , a los efectos de identificar posibles relaciones entre la situación energética y la sustentabilidad de cada país. Además, se buscarán posibles cambios que se hayan dado en el tiempo de estas relaciones, que evidencien un avance en el desarrollo sustentable entre la década de los 80 y 90. Para ello, compararemos datos del año 1984 y 1996.
+
