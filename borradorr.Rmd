@@ -103,9 +103,14 @@ Se observa que existen ciertas correspondencias entre los patrones aquí detalla
 
 > En estos patrones nos vamos a basar para reproducrilo con ACP y comparar los cambios entre el 84 y el 96
 
+### Breve descripción de los datos
 
-Contamos con información de 24 países y 14 variables para examinar, todas ellas cuantitativas, por lo que se procede a realizar un Análisis de Componentes Principales (ACP).
-Como primer paso, y de acuerdo a lo sugerido, se estandarizan las variables por practicidad.
+
+#### Países que se incluyen en el análisis:
+
+
+Contamos con información de 24 países (todos ellos  de América Latina y el Caribe) y 14 variables para examinar, todas ellas cuantitativas, por lo que se procede a realizar un Análisis de Componentes Principales (ACP).
+Como primer paso, y de acuerdo a lo sugerido, se estandarizan las variables para una correcta interpretación de los resultados.
 
 
 ```{r datos, include=FALSE,cache= TRUE}
@@ -126,9 +131,7 @@ rownames(Energia_st)=Energia_st$PAISES
 rownames(Energia1)=Energia1$PAISES
 ```
 
->Arreglar todas las tablas posteriores, no se ven bien en PDF
 
-#### Países contenidos en los datos:
 
 \
 ```{r, include=FALSE}
@@ -136,42 +139,12 @@ kable(unique(pais), booktabs=TRUE)
 ```
 
 
-#### **Datos**
+#### Relación entre las variables (1984-1996)
 
 
-Primeras 5 filas:
+Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos (ver tabla en Anexos). Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
 
-
-```{r, include=FALSE}
-kable(head(Energia1[,2:15]),booktabs=TRUE, format="latex") %>% 
- scroll_box(width="100%")
-```
-
-
-#### **Datos estandarizados**
-
-Primeras 5 filas:
-
-
-```{r, include=FALSE}
-kable(head(Energia_st[4:17])) %>% 
-  kable_styling(full_width = F, fixed_thead = T)
-```
-
-
-## Situación regional en 1984
-
-
-Matriz de correlaciones entre variables:
-
-
-```{r correlaciones 1984, include=FALSE}
-kable(cor(Energia1[Energia1$Año==1984,2:15])) %>% 
-  kable_styling(full_width = F, fixed_thead = T)
-```
-
-
-Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos. Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
+Para el año 1996, observamos que se mantienen las correlaciones elevadas detectadas para 1984 (ver tabla en Anexos). Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
 
 La existencia de correlación alta entre las variables justifica el uso de ACP. La relación entre ellas puede tener como resultado información redundante, la cual intentaremos "aislar" con este método.
 
@@ -184,7 +157,7 @@ La variabilidad de los datos es captada en un 46.54% por el primer eje de inerci
 
 ```{r,include=FALSE}
 acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
-res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
+res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=4, graph = FALSE)
 ```
 ```{r vp 1984, results='asis'}
 vp84<-res.pca1984[["eig"]][,1] %>% 
@@ -196,11 +169,7 @@ kable(vp84,booktabs=TRUE)
 ```{r plot eigen84,out.width="80%"}
 vp84<-cbind.data.frame(vp84,res.pca1984[["eig"]][,3])
 colnames(vp84)=c("Valores propios","% acumulado de varianza")
-ggplot(vp84,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
-  geom_line()+
-  geom_label(aes(label=round(`% acumulado de varianza`,2)))+
-  labs(title = "Varianza explicada por cada dimensión",x="Número del valor propio", y="Valores propios")
-
+fviz_eig(acp1984,ylab = "% de inercia explicada", xlab = "Valores propios", main = "Inercia explicada por los componentes")
 ```
 
 
@@ -235,8 +204,14 @@ La pérdida de información en caso de trabajar con el plano principal sería de
 Una vez determinado, de forma preliminar, la dimensión en que se trabajará, realizamos el cálculo de componentes y su presentación gráfica para observar los resultados y confirmarlo. 
 
 Desde la perspectiva de las variables, encontramos que las variables mejor representadas ($|\rho| \geq 0.6$) por las dimensiones elegidas son (en orden descendente):
+```{r, include=FALSE}
+dimdesc(acp1984)[1]
+dimdesc(acp1984)[2]
+dimdesc(acp1984)[3]
+dimdesc(acp1984)[4]
+```
 
-* Dimensión 1: Oferta de energía secundaria per-cápita, consumo neto de electricidad per-cápita, consumo residencial de energía, consumo energético final per-cápita, Producto Bruto Interno per-cápita, consumo de energía del sector transporte, oferta de energía primaria per- cápita, consumo industrial de energía. \
+* Dimensión 1: Oferta de energía secundaria per-cápita, consumo neto de electricidad per-cápita, consumo energético final per-cápita, Producto Bruto Interno per-cápita, consumo de energía del sector transporte, oferta de energía primaria per- cápita, consumo industrial de energía, proporción de consumo de energía secundaria. \
 * Dimensión 2: Productividad industrial energética, productividad energética. \
 * Dimensión 3: Emisión de CO2 por unidad de consumo energético, emisión de CO2 per-cápita. \
 * Dimensión 4: Proporción de energía importada sobre el total de la oferta. \
@@ -249,12 +224,17 @@ Visualizamos en los correspondientes círculos de correlaciones:
 
 
 ```{r, fig.cap= "Dimensiones 1 y 2.",out.width="80%"}
-plot.PCA(res.pca1984,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1984",select='cos2  0',unselect=0)
+fviz_pca_var(acp1984, col.var = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
 ```
 
+\
 
 ```{r,fig.cap= "Dimensiones 3 y 4.",out.width="80%"}
-plot.PCA(res.pca1984,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1984",select='cos2  0',unselect=0)
+fviz_pca_var(acp1984, col.var = "cos2", axes = c(3,4),
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
 ```
 
 
@@ -262,7 +242,10 @@ En lo que respecta a los individuos (Países):
 
 
 ```{r, fig.cap="Dimensiones 1 y 2.", out.width="80%"}
-plot.PCA(res.pca1984,title="Gráfico perspectiva de Países 1984",habillage = 'cos2')
+fviz_pca_ind(acp1984, col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping (slow if many points)
+             )
 ```
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
@@ -272,7 +255,10 @@ Si bien se observa mayor dispersión en el caso de la representación de los pa�
 
 
 ```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
-plot.PCA(res.pca1984,axes=c(3,4),title="Gráfico perspectiva de Países 1984",habillage = 'cos2')
+fviz_pca_ind(acp1984, axes = c(3,4),col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping (slow if many points)
+             )
 ```
 
 
@@ -283,11 +269,11 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Dimensión 1 + Dimensión 4: Barbados, Cuba. \
 * Dimensión 3 + Dimensión 4: Panamá. \
 
-### Caracterización de países
+#### Caracterización de países para 1984
 
 **Grupo 1: **
 * Valores altos de proporción de consumo energético residencial. \
-* Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per cápita, productividad energética, consumo energético final per-cápita, productividad industrial, y la oferta de energía primaria. \
+* Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per cápita, productividad energética, consumo energético final per-cápita. \
          
 **Grupo 2:** 
 * Valores altos de proporción de consumo de energía secundaria, productividad energética, proporción de consumo eléctrico del sector transporte, productividad industrial, oferta de energía secundaria, PBI per cápita. \
@@ -304,8 +290,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 |**Grupo 3**  | Trinidad, Venezuela                                                                                        |
 
 ```{r,out.width="80%"}
-
-hcpc1984<-HCPC(acp1984, graph = FALSE)
+hcpc1984<-HCPC(res.pca1984, graph = FALSE)
 fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
              show.clust.cent = TRUE, # Show cluster centers
              palette = "jco",         # Color palette see ?ggpubr::ggpar
@@ -314,38 +299,11 @@ fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
 ```
 
 
-
-```{r summary de ACP, va en anexos,include=FALSE}
-summary(res.pca1984)
-```
-
-
-\
-
-```{r summary de las variables originales va en anexos, include=FALSE}
-(summary(Energia1[,2:15]))
-```
-
-
-## Situación regional en 1996
-
-
-Matriz de correlaciones entre variables para el año 1996:
-
-
-```{r correlaciones 1996}
-kable(cor(Energia1[Energia1$Año==1996,2:15])) %>% 
-  kable_styling(full_width = F, fixed_thead = T)
-```
-
-
-Para el año 1996, observamos que se mantienen las correlaciones altas (>0.70) detectadas para 1984. Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
-
 ### Análisis de componentes principales para 1984
 
 ```{r,include=FALSE}
 acp1996=PCA(Energia_st[Energia_st$Año==1996,c(4:17)])
-res.pca1996 = PCA(Energia_st[Energia_st$Año==1996,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
+res.pca1996 = PCA(Energia_st[Energia_st$Año==1996,c(4:17)], scale.unit=TRUE, ncp=4, graph = FALSE)
 ```
 
 ```{r,include=FALSE}
@@ -366,11 +324,8 @@ kable(vp96,booktabs=TRUE)
 ```{r plot eigen96,out.width="80%"}
 vp96<-cbind.data.frame(vp96,res.pca1996[["eig"]][,3])
 colnames(vp96)=c("Valores propios","% acumulado de varianza")
-ggplot(vp96,aes(x=seq(1:14),y=`Valores propios`))+ ##mejorar el gráfico
-  geom_line()+
-  geom_label(aes(label=round(`% acumulado de varianza`,2)))+
-  labs(title = "Varianza explicada por cada dimensión",x="Número del valor propio", y="Valores propios")
 
+fviz_eig(acp1984,ylab = "% de inercia explicada", xlab = "Valores propios", main = "Inercia explicada por los componentes")
 ```
 
 
@@ -386,72 +341,114 @@ La pérdida de información en caso de trabajar con el plano principal sería de
 
 Una vez determinado, de forma preliminar, la dimensión en que se trabajará, realizamos el cálculo de componentes y su presentación gráfica para observar los resultados y confirmarlo. 
 
-Desde la perspectiva de las variables, encontramos que las variables mejor representadas ($|\rho| \geq 0.6$) por las dimensiones elegidas son (en orden descendente):
+Desde la perspectiva de las variables, encontramos que las variables mejor representadas ($|\rho| \geq 0.6$) por las dimensiones elegidas son :
+```{r,include=FALSE}
+dimdesc(acp1996)[1]
+dimdesc(acp1996)[2]
+dimdesc(acp1996)[3]
+dimdesc(acp1996)[4]
+```
 
-* Dimensión 1: Consumo neto de electricidad per-cápita, oferta de energía secundaria per-cápita, consumo residencial de energía, Producto Bruto Interno per-cápita, consumo energético final. \
-* Dimensión 2: Productividad energética, productividad industrial, emisión de Co2 por unidad energética  de consumo, oferta de energía primaria per-cápita, proporción del consumo energético del sector transporte, proporción del consumo energético del sector industrial, proporción del consumo de energía secundaria. \
+
+* Dimensión 1: Consumo neto de electricidad per-cápita, oferta de energía secundaria per-cápita, consumo residencial de energía, Producto Bruto Interno per-cápita, consumo energético final, proporción de consumo energético industrial, emisión de de CO2 per-cápita. \
+
+* Dimensión 2: Proporción del consumo de energía secundaria, productividad energética, proporción del consumo energético del sector transporte, productividad industrial, emisión de Co2 por unidad energética de consumo, oferta de energía primaria per-cápita,  proporción del consumo energético del sector industrial. \
+
 * Dimensión 3: Emisión de CO2 por unidad de consumo energético, emisión de CO2 per-cápita. \
-* evaluar incluir la 4ta acá
 
-El tercer componente, al igual que en 1984, representa la *dimensión ambiental*, mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*. 
+El tercer componente, al igual que en 1984, representa la *dimensión ambiental*, mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*. \
+
+La *dimensión política* no se considera en el análisis de 1996, ya que la proporción de varianza explicada por esa dimensión es menor. Por otra parte, la única variable bien explicada por esa dimensión era (nuevamente) el porcentaje de importaciones de energía, por lo que eventualmente puede analizarse de forma individual. \
+
 En comparación con 1984, muchas de las variables que habían sido agrupadas en la dimensión social, ahora lo hacen en la dimensión económica, algunas de ellas relacionadas en sentido opuesto (correlación negativa con el eje): consumo energético final per-cápita, oferta de energía primaria per-cápita, y la proporción de consumo energético industrial.
 
-El conjunto de dimensiones más relevante sigue siendo la social y la económica, incluso con un leve aumento de su pdoer explicativo en comparación con 1984. 
+El conjunto de dimensiones más relevante sigue siendo la social y la económica, incluso con un leve aumento de su poder explicativo en comparación con 1984. Como consecuencia, entendemos que existió (en promedio) una variación muy reducida a nivel regional de los indicadores relativos al medioambiente y a la independencia política.
 
 Visualizamos en los correspondientes círculos de correlaciones:
 
 
 ```{r, fig.cap= "Dimensiones 1 y 2.",out.width="80%"}
-plot.PCA(res.pca1996,choix='var',habillage = 'contrib',title="Círculo de correlaciones para 1996",select='cos2  0.6',unselect=0)
+
+fviz_pca_var(acp1996, col.var = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
 ```
 
 
 ```{r,fig.cap= "Dimensiones 3 y 4.",out.width="80%"}
-plot.PCA(res.pca1996,choix = "var",axes=c(3,4),habillage='cos2', title = "Círculo de correlaciones para 1996",select='cos2  0.6',unselect=0)
+
+fviz_pca_var(acp1996, col.var = "cos2", axes = c(3,4),
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
 ```
 
 
 En lo que respecta a los individuos (Países):
 
 ```{r, fig.cap="Dimensiones 1 y 2.",out.width="80%"}
-plot.PCA(res.pca1996,habillage = "cos2",title="Gráfico perspectiva de Países",select='cos2  0.5')
+fviz_pca_ind(acp1996, col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping (slow if many points)
+             )
 ```
+
 
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
 
 * Dimensión 1: Haití, Nicaragua, El Salvador, Guatemala, México, Argentina, Trinidad y Tobago. \
+
 * Dimensión 2: Uruguay, Guyana. \ 
 
 
 ```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
-plot.PCA(res.pca1996,axes=c(3,4),title="Gráfico perspectiva de Países",habillage = "cos2")
+
+fviz_pca_ind(acp1996, axes = c(3,4),col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping (slow if many points)
+             )
 ```
+
 
 Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio, diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
 
-* Plano principal: Brasil, Honduras, Venezuela.
-* Dimensión 1 + Dimensión 3: Paraguay, Bolivia, Brasil, Cuba.
-* Dimensión 1 + Dimensión 4: Barbados, Cuba.
-* Dimensión 3 + Dimensión 4: Panamá.
+* Plano principal: Brasil, Honduras, Venezuela. \
 
-### Caracterización de países
+* Dimensión 1 + Dimensión 3: Paraguay, Bolivia, Brasil, Cuba. \
+
+* Dimensión 1 + Dimensión 4: Barbados, Cuba. \
+
+* Dimensión 3 + Dimensión 4: Panamá. \
+
+
+#### Caracterización de países
+
 
 **Grupo 1: **
+
+
 * Valores altos de proporción de consumo energético residencial. \
+
 * Valores bajos de consumo eléctrico per capita, oferta de energía secundaria per cápita, PBI per-cápita, consumo energético final per-cápita, proporción de consumo de energía secundaria per-cápita, emisión de CO2 per-cápita, proporción de consumo energético industrial, del sector transporte, y la productividad energética. \
          
 **Grupo 2:** 
-* Valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per cápita, proporción de consumo eléctrico del sector transporte, PBI per cápita, emisión de CO2 per cápita, y productividad energética.\
+
+
+* Valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per cápita, proporción de consumo eléctrico del sector transporte, PBI per cápita, emisión de CO2 per cápita, y productividad energética. \
+
 * Valores bajos de la proporción de consumo energético residencial.
 
 **Grupo 3:**
-* Valores altos de oferta de energía primaria, consume energético per-cápita, y proporción de consumo energético industrial.\
+
+
+* Valores altos de oferta de energía primaria, consume energético per-cápita, y proporción de consumo energético industrial. \
 
 |             | **Países**                                                                                                    |
 |:-----------:|:--------------------------------------------------------------------------------------------------------------|
 |**Grupo 1**  | El Salvador, Guatemala, Guyana, Haití, Honduras, Nicaragua, Paraguay, Perú, Ecuador, Bolivia, Rep. Dominicana |
 |**Grupo 2**  | Argentina, Barbados, Cuba, Venezuela, Jamaica, Uruguay, Brasil, Chile, México, Costa Rica, Panamá,            |
 |**Grupo 3**  | Trinidad                                                                                                      |
+
+
 ```{r, out.width="80%"}
 
 hcpc1996<-HCPC(acp1996, graph = FALSE)
@@ -460,5 +457,57 @@ fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
              palette = "jco",         # Color palette see ?ggpubr::ggpar
              ggtheme = theme_minimal(),
              main = "Caracterización de países para 1996")
+```
+\
+
+## Principales conclusiones
+
+
+\newpage
+
+## Anexos
+
+
+```{r tabla de datos}
+
+kable(head(Energia1[2:9]),caption = "Primeras 5 filas de datos",booktabs=TRUE)
+
+
+kable(head(Energia1[10:15]),caption = "Primeras 5 filas de datos (cont.)",booktabs=TRUE)
+```
+
+
+```{r, tabla estandarizada, fig.align='center'}
+kable(head(Energia_st[4:10]),caption = "Primeras 5 filas de datos estandarizados",booktabs=TRUE)
+
+kable(head(Energia_st[10:17]),caption = "Primeras 5 filas de datos estandarizados (cont.)",booktabs=TRUE)
+```
+
+
+```{r summary de las variables originales va en anexos, include=FALSE}
+summary(Energia1[,2:15])
+```
+
+
+```{r correlaciones 1984, fig.align='center'}
+
+
+kable(cor(Energia1[Energia1$Año==1984,2:9]), caption="Matriz de correlaciones. 1984.",booktabs=TRUE)
+
+
+kable(cor(Energia1[Energia1$Año==1984,10:15]), caption="Matriz de correlaciones. 1984. (cont.)",booktabs=TRUE)
+```
+
+\
+```{r correlaciones 1996}
+
+kable(cor(Energia1[Energia1$Año==1996,2:8]), caption="Matriz de correlaciones. 1996.",booktabs=TRUE)
+kable(cor(Energia1[Energia1$Año==1996,9:15]), caption="Matriz de correlaciones. 1996. (cont.)",booktabs=TRUE)
+
+```
+
+
+```{r summary de ACP, va en anexos,include=FALSE}
+summary(res.pca1984)
 ```
 
