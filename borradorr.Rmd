@@ -1,6 +1,6 @@
 ---
-title: "Untitled"
-author: "Cecilia Aparicio"
+title: "Primera Entrega - Análisis Multivariado I"
+author: "Cecilia Aparicio - Luciano Spinelli"  
 date: "Mayo 2021"
 output:
   rmarkdown::pdf_document:
@@ -27,8 +27,19 @@ library(factoextra)
 ```
 ## Resumen ejecutivo
 
->introducir acá de qué se va a tratar el proyecto: estudio de principales variables que explican el desarrollo sustentable, comparación entre los 80 y los 90 para identificar cambios que sean indicios de avance en la aplicación de politicas energeticas que favorezcan la sustentabilidad del desarrolloetc etc etc##.
+El siguiente trabajo se orientará a analizar las relaciones latentes entre las características socioeconómicas de los países de América Latina y el Caribe, con sus posibilidades de generar desarrollo sustentable. Para ello nos basaremos en las nociones y conceptos dados por CEPAL, OLADE, y GTZ en "Energía y Desarrollo sustentable en América Latina y el Caribe". De dicho estudio se desprende que la región comenzó a mostrar algunos avances en la reestructura energética entre en el período 1980-2000, pero con ciertas disparidades entre países. A efectos de explicar tales diferencias, se intenta clasificar a cada uno en función de determinados indicadores, que se encuentran agrupados a su vez en 4 dimensiones principales: económica, social, política, y medioambiental.
 
+Los autores entendían que tal clasificación se tornaba compleja al tener que contemplar una cantidad considerable de variables, y que por ese motivo, la clasificación podía no ser precisa. Este tipo de dificultades podrían llegar a superarse aplicando técnicas de análisis multivariado.
+
+El objetivo principal será lograr una clasificación de los países de la región, según su desempeño en determinados indicadores. El procedimiento que entendimos más adecuado, de acuerdo a la estructura de nuestra base de datos (variables cuantitativas), es un Análisis de Componentes Principales. En específico, se harán dos análisis: uno correspondiente a los datos del año 1984 y otro para 1996. Por lo tanto, además de lograr una clasificación regional, queremos encontrar si existen diferencia importantes entre la clasificación generada en cada año, que den indicios de un avance en el desarrollo sustentable.
+
+Realizado el análisis, encontramos que la clasificación generada tanto para 1984 como para 1996 son muy similares. En ambos casos, las principales variaciones en el desempeño de cada país está dada por los indicadores vinculados a dimensiones económica y social, siendo la medioambiental y la política las menos relevantes. Sin embargo, en 1996 entra en la clasificación el indicador de "Emisiones de CO2 per-cápita", como un indicador significativo, y relacionado de forma positiva a aquellos países que contaban con un buen desempeño económico y de diversificación energética en términos generales. Por ende, podemos intuir que los países que conformaban tal grupo, a pesar de sus buenos resultados en esas dos áreas, no progresaron satisfactoriamente en el concepto de desarrollo sustentable.
+
+Existe también una tercera categoría que sólo contempla 1 o 2 países (dependiendo del año), que tiene un comportamiento diferente al resto, sin llegar a ser extremos. Se relacionan de forma positiva con indicadores como oferta de energía primaria y proporción del consumo energético industrial. Entendemos que se trata de países con un fuerte componente exportador de energía, ya que también mostraron tener niveles bajos de importación energética, pero ambos mostraron un comportamiento diferenciado en cuanto a la "pureza de uso energético" (emisiones de CO2 per-cápita y por unidad de consumo energético).
+
+Las categorías resultantes no coinciden exactamente con las planteadas por los autores en el estudio mencionado. De todas formas, puede hallarse cierta similitud entre nuestra categoría 3 y el Grupo I del estudio (a excepción de Barbados), nuestra categoría 1 y el grupo IV (a excepción de Cuba), y nuestra categoría 2 con el grupo II y III. 
+
+\pagebreak
 ## Desarrollo sustentable en América Latina
 
 
@@ -48,7 +59,7 @@ En este trabajo se intentará superar tales dificultades.
 
 Nos basaremos en el estudio realizado por OLADE, CEPAL, y GTZ: *"Energía y Desarrollo sustentable en América Latina y el Caribe"*, a los efectos de identificar posibles relaciones entre la situación energética y la sustentabilidad del desarrollo regional. Además, se buscarán posibles cambios que se hayan dado en el tiempo de estas relaciones, que evidencien un avance en el desarrollo sustentable entre la década de los 80 y 90. Para ello, compararemos datos del año 1984 y 1996.
 
-
+\pagebreak
 ## Patrones de situación energética en AL
 
 En el análisis de la sustentabilidad a nivel regional, CEPAL/OLADE/GTZ (1997) define cuatro patrones:
@@ -95,6 +106,7 @@ knitr::include_graphics(here::here("patrones.png"))
 
 
 Se observa que existen ciertas correspondencias entre los patrones aquí detallados y los de situación energética, algunos más claros que otros.
+
 
 
 |Grupo Situación        | Grupo Sustentabilidad |
@@ -144,7 +156,7 @@ kable(matrix(unique(pais),6,6))
 #### Relación entre las variables (1984-1996)
 
 \hfill\break
-Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos (ver Tabla 11-12 en Anexos). Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
+Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos (ver Tabla 11-12 en Anexos). Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per -cápita (*PBIpc*), el consumo energético per -cápita (*ConsENpc*) con la oferta primaria de energía per -cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per -cápita.
 
 
 Para el año 1996, observamos que se mantienen las correlaciones elevadas detectadas para 1984 (ver Tabla 13-14 en Anexos). Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
@@ -217,13 +229,13 @@ dimdesc(acp1984)[3]
 dimdesc(acp1984)[4]
 ```
 
-* Dimensión 1: Oferta de energía secundaria per-cápita, consumo neto de electricidad per-cápita, consumo energético final per-cápita, Producto Bruto Interno per-cápita, consumo de energía del sector transporte, oferta de energía primaria per- cápita, consumo industrial de energía, proporción de consumo de energía secundaria. \
+* Dimensión 1: Oferta de energía secundaria per-cápita, consumo neto de electricidad per-cápita, consumo energético final per-cápita, Producto Bruto Interno per-cápita, consumo de energía del sector transporte, oferta de energía primaria per- -cápita, consumo industrial de energía, proporción de consumo de energía secundaria. \
 * Dimensión 2: Productividad industrial energética, productividad energética. \
 * Dimensión 3: Emisión de CO2 por unidad de consumo energético, emisión de CO2 per-cápita. \
 * Dimensión 4: Proporción de energía importada sobre el total de la oferta. \
 Resulta claro entonces que el tercer componente representará la *dimensión ambiental*, la cuarta representa la *dimensión política* (autarquía política dada por el nivel de dependencia energético), mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*.
 
-A su vez, entendemos que las dimensiones más relevante son la social y la económica, dado que son las que explican en mayor medida las variaciones de los datos. En lo que respecta a la dimensión ambiental y política, no hay variaciones significativas en los datos.Siendo así, podemos restringir el análisis al plano principal por mayor practicidad, donde estaríamos prescindiendo principalmente, del aporte de las variables Importaciones y emisión de CO2 per cápita.
+A su vez, entendemos que las dimensiones más relevante son la social y la económica, dado que son las que explican en mayor medida las variaciones de los datos. En lo que respecta a la dimensión ambiental y política, no hay variaciones significativas en los datos.Siendo así, podemos restringir el análisis al plano principal por mayor practicidad, donde estaríamos prescindiendo principalmente, del aporte de las variables Importaciones y emisión de CO2 per -cápita.
 
 Visualizamos en los correspondientes círculos de correlaciones:
 
@@ -240,10 +252,8 @@ fviz_pca_var(acp1984, col.var = "cos2", axes = c(3,4),
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
              )
 ```
-
-
+\pagebreak
 En lo que respecta a los individuos (Países):
-
 
 ```{r, fig.cap="Dimensiones 1 y 2.", out.width="75%"}
 fviz_pca_ind(acp1984, col.ind = "cos2", 
@@ -266,6 +276,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Dimensión 1 + Dimensión 4: Barbados, Cuba. \
 * Dimensión 3 + Dimensión 4: Panamá. \
 
+Observamos que en este plano (que en el caso de las variables, representan satisfactoriamente a la proporción de importación energética) Venezuela, Trinidad y Tobago se comportan de manera opuesta con la variable de importación energética, sugiriendo que tienen valores muy bajos. Por otra parte, Venezuela se encuentra más a la izquierda del origen, dando a entender que mantiene valores bajos de emisiones de CO2, mientras que Trinidad y Tobago se encuentra en sentido contrario.
 
 ```{r, fig.cap="Dimensiones 3 y 4.",out.width="75%"}
 fviz_pca_ind(acp1984, axes = c(3,4),col.ind = "cos2", 
@@ -280,14 +291,14 @@ fviz_pca_ind(acp1984, axes = c(3,4),col.ind = "cos2",
 \hfill\break
 **Grupo 1: **
 * Valores altos de proporción de consumo energético residencial. \
-* Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per cápita, productividad energética, consumo energético final per-cápita. \
+* Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per -cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per -cápita, productividad energética, consumo energético final per-cápita. \
          
 **Grupo 2:** 
-* Valores altos de proporción de consumo de energía secundaria, productividad energética, proporción de consumo eléctrico del sector transporte, productividad industrial, oferta de energía secundaria, PBI per cápita. \
+* Valores altos de proporción de consumo de energía secundaria, productividad energética, proporción de consumo eléctrico del sector transporte, productividad industrial, oferta de energía secundaria, PBI per -cápita. \
 * Valores bajos de la proporción de consumo energético residencial. \
 
 **Grupo 3:**
-* Valores altos de oferta de energía primaria, consumo energético final per-cápita, consumo eléctrico per cápita, proporción de consumo energético industrial, y la oferta de energía secundaria. \
+* Valores altos de oferta de energía primaria, consumo energético final per-cápita, consumo eléctrico per -cápita, proporción de consumo energético industrial, y la oferta de energía secundaria. \
 * Valores bajos de la proporción de consumo energético residencial. \
 
 
@@ -442,13 +453,13 @@ fviz_pca_ind(acp1996, axes = c(3,4),col.ind = "cos2",
 
 * Valores altos de proporción de consumo energético residencial. \
 
-* Valores bajos de consumo eléctrico per capita, oferta de energía secundaria per cápita, PBI per-cápita, consumo energético final per-cápita, proporción de consumo de energía secundaria per-cápita, emisión de CO2 per-cápita, proporción de consumo energético industrial, del sector transporte, y la productividad energética. \
+* Valores bajos de consumo eléctrico per-cápita, oferta de energía secundaria per -cápita, PBI per-cápita, consumo energético final per-cápita, proporción de consumo de energía secundaria per-cápita, emisión de CO2 per-cápita, proporción de consumo energético industrial, del sector transporte, y la productividad energética. \
 
          
 **Grupo 2:** 
 
 
-* Valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per cápita, proporción de consumo eléctrico del sector transporte, PBI per cápita, emisión de CO2 per cápita, y productividad energética. \
+* Valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per-cápita, proporción de consumo eléctrico del sector transporte, PBI per-cápita, emisión de CO2 per-cápita, y productividad energética. \
 
 * Valores bajos de la proporción de consumo energético residencial.
 
@@ -492,11 +503,11 @@ En el **Grupo 1**, aquellos países que contaban con una proporción de consumo 
 
 Por otro lado, en el **Grupo 2** sucedía lo contrario. Se observa que la proporción de consumo residencial es baja, pero cuentan con un uso amplio de energías secundarias, y mejor desempeño a nivel de eficiencia energética en la producción. Se observa también que en promedio, los países que pertenecen a este grupo tienen un mayor PBI per-cápita.
 
-Por último, en el **Grupo 3**, se vincula con un mayor nivel de oferta de energía primaria, consumo energético final per-cápita, y proporción de consumo energético industrial. Entendemos que se podría tratar de países con un nivel significativo de exportaciones de energía, ya que son los que presentaban menor nivel de importación energética.
+Por último, en el **Grupo 3**, se vincula con un mayor nivel de oferta de energía primaria, consumo energético final per-cápita, y proporción de consumo energético industrial. Entendemos que se podría tratar de países con un nivel significativo de exportaciones de energía, ya que son los que presentaban menor nivel de importación energética, aunque con un comportamiento diferenciado en cuanto a las emisiones de CO2 ("Pureza ambiental del uso energético").
 
 Los resultados para 1996 no dieron pauta de que haya existido un cambio estructural importante en la década de los 80-90. Las categorías para 1996 son, en esencia, las mismas antes mencionadas, con algunas variantes menores respecto a las variables que representan. Por ejemplo, el nivel de emisión de CO2 per-cápita está presente de forma significativa en la elaboración de las categorías 1 y 2, debido a que este indicador se volvió levemente más relevante en 1996. Las emisiones de CO2 eran mayores (en promedio) en los países del Grupo 2 que en el Grupo 1.
 
-A modo de conclusión, encontramos que existía una relación positiva entre la diversificación energética (por ejemplo, con la incorporación de la generación de energía eléctrica a la matriz productiva) y la eficiencia energética del sector productivo, que favorece al desarrollo de los países. Sin embargo, podrían haber indicios que muestren que este desarrollo no era sustentable, ya que en 1996 se vuelve relevante el nivel de emisión de CO2 per cápita.
+A modo de conclusión, encontramos que existía una relación positiva entre la diversificación energética (por ejemplo, con la incorporación de la generación de energía eléctrica a la matriz productiva) y la eficiencia energética del sector productivo, que favorece al desarrollo de los países. Sin embargo, podrían haber indicios que muestren que este desarrollo no era sustentable, ya que en 1996 se vuelve relevante el nivel de emisión de CO2 per -cápita.
 
 \pagebreak
 
