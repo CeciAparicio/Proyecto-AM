@@ -65,7 +65,7 @@ acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
 acp1996=PCA(Energia_st[Energia_st$Año==1996,c(4:17)])
 
 
-res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
+res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
 resshiny1984 = PCAshiny(res.pca1984)
 
 plot.PCA(res.PCA,choix='var',habillage = 'cos2',title="Gráfico perspectiva de variables")
@@ -80,6 +80,8 @@ ggplot(a,aes(x=seq(1:14),y=eigenvalue))+
   
 a<-as.data.frame(res.pca1984$eig)
 
+fviz_eig(acp1984,ylab = "% de inercia explicada", xlab = "Valores propios", main = "Inercia explicada por los componentes")
+get_eigenvalue(acp1984)
 # las dos primeras dimensiones sólo aportan un 63.3% de la varianza, con 3 se explica 76.18%
 ## VARIABLES
 # D1 correlacion alta con PBIpc(0.81) , O_SECpc(0.92), XC_RES(-0.9) , CELECpc (0.92) , CONSENpc (0.85)
@@ -94,7 +96,7 @@ a<-as.data.frame(res.pca1984$eig)
 # D4 con D1 mejora representación de Barbados y Cuba
 
 
-res.pca1996 = PCA(Energia_st[Energia_st$Año==1996,c(2:15)], scale.unit=TRUE, ncp=5, graph = FALSE)
+res.pca1996 = PCA(Energia_st[Energia_st$Año==1996,c(4:17)], scale.unit=TRUE, ncp=5, graph = FALSE)
 resshiny1996 = PCAshiny(res.pca1996)
 
 plot.PCA(res.PCA,choix='var',habillage = 'contrib',title="Gráfico perspectiva variables")
@@ -124,9 +126,19 @@ evplot()
 
 evplot(aa$values)
 
-hcpc1984<-HCPC(acp1984, graph = FALSE)
+hcpc1984<-HCPC(res.pca1984, graph = FALSE,)
 fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
              show.clust.cent = TRUE, # Show cluster centers
              palette = "jco",         # Color palette see ?ggpubr::ggpar
              ggtheme = theme_minimal(),
              main = "Caracterización de países para 1984")
+
+hcpc1996<-HCPC(acp1996, graph = FALSE)
+fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
+             show.clust.cent = TRUE, # Show cluster centers
+             palette = "jco",         # Color palette see ?ggpubr::ggpar
+             ggtheme = theme_minimal(),
+             main = "Caracterización de países para 1984")
+
+fviz_pca_biplot(acp1984)
+fviz_pca_biplot(acp1984)
