@@ -96,6 +96,7 @@ get_eigenvalue(acp1984)
 # D4 con D1 mejora representación de Barbados y Cuba
 
 
+
 res.pca1996 = PCA(Energia_st[Energia_st$Año==1996,c(4:17)], scale.unit=TRUE, ncp=4, graph = FALSE)
 resshiny1996 = PCAshiny(res.pca1996)
 
@@ -126,19 +127,19 @@ evplot()
 
 evplot(aa$values)
 
-hcpc1984<-HCPC(res.pca1984, graph = FALSE,nb.clust = 3)
+hcpc1984<-HCPC(res.pca1984, graph = FALSE,nb.clust = 4)
 fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
              show.clust.cent = TRUE, # Show cluster centers
              palette = "jco",         # Color palette see ?ggpubr::ggpar
              ggtheme = theme_minimal(),
              main = "Caracterización de países para 1984")
 
-hcpc1996<-HCPC(acp1996, graph = FALSE,nb.clust = 3)
+hcpc1996<-HCPC(res.pca1996, graph = FALSE,nb.clust = 4)
 fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
              show.clust.cent = TRUE, # Show cluster centers
              palette = "jco",         # Color palette see ?ggpubr::ggpar
              ggtheme = theme_minimal(),
-             main = "Caracterización de países para 1984")
+             main = "Caracterización de países para 1996")
 
 fviz_pca_biplot(acp1984)
 fviz_pca_biplot(acp1984)
