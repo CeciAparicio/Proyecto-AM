@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center",fig.pos = "!h")
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center",results = "hold")
 ``` 
 
 ```{r}
@@ -108,10 +108,9 @@ Se observa que existen ciertas correspondencias entre los patrones aquí detalla
 
 #### Países que se incluyen en el análisis:
 
-
+\
 Contamos con información de 24 países (todos ellos  de América Latina y el Caribe) y 14 variables para examinar, todas ellas cuantitativas, por lo que se procede a realizar un Análisis de Componentes Principales (ACP).
 Como primer paso, y de acuerdo a lo sugerido, se estandarizan las variables para una correcta interpretación de los resultados.
-
 
 ```{r datos, include=FALSE,cache= TRUE}
 Energia1 <- read.delim("C:/Users/cecil/OneDrive/Documentos/facu/ESTADISTICA/AMulti/Proyecto/Energia1.txt")
@@ -132,16 +131,14 @@ rownames(Energia1)=Energia1$PAISES
 ```
 
 
-
-\
-```{r, include=FALSE}
-kable(unique(pais), booktabs=TRUE)
+```{r, fig.align="left",results='hold'}
+kable(unique(pais), booktabs=TRUE,caption = "Países considerados")
 ```
 
 
 #### Relación entre las variables (1984-1996)
 
-
+\
 Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos (ver tabla en Anexos). Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
 
 Para el año 1996, observamos que se mantienen las correlaciones elevadas detectadas para 1984 (ver tabla en Anexos). Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
@@ -159,12 +156,13 @@ La variabilidad de los datos es captada en un 46.54% por el primer eje de inerci
 acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
 res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, ncp=4, graph = FALSE)
 ```
-```{r vp 1984, results='asis'}
+```{r vp 1984,fig.align='center'}
 vp84<-res.pca1984[["eig"]][,1] %>% 
   as.data.frame()
 colnames(vp84)="Valores propios"
-kable(vp84,booktabs=TRUE)
+kable(vp84,booktabs=TRUE,)
 ```
+
 
 ```{r plot eigen84,out.width="80%"}
 vp84<-cbind.data.frame(vp84,res.pca1984[["eig"]][,3])
@@ -173,7 +171,9 @@ fviz_eig(acp1984,ylab = "% de inercia explicada", xlab = "Valores propios", main
 ```
 
 
+
 Por otra parte, el criterio *"Broken-sitcks"*, sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en $p$ partes aleatorias. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes, aunque la diferencia entre la inercia explicada por los componentes y la explicada de forma "aleatoria" en los componentes 3 y 4, no difieren demasiado. Por ende, podemos pensar que la "información real" está mayormente captada por los dos primeros componentes.
+
 
 
 ```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE,out.width="80%"}
@@ -229,7 +229,7 @@ fviz_pca_var(acp1984, col.var = "cos2",
              )
 ```
 
-\
+
 
 ```{r,fig.cap= "Dimensiones 3 y 4.",out.width="80%"}
 fviz_pca_var(acp1984, col.var = "cos2", axes = c(3,4),
@@ -237,6 +237,7 @@ fviz_pca_var(acp1984, col.var = "cos2", axes = c(3,4),
              )
 ```
 
+\
 
 En lo que respecta a los individuos (Países):
 
@@ -248,10 +249,18 @@ fviz_pca_ind(acp1984, col.ind = "cos2",
              )
 ```
 
+
 Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
 
 * Dimensión 1: Haití, Nicaragua, El Salvador, Guatemala, México, Argentina, Trinidad y Tobago. \
 * Dimensión 2: Uruguay, Guyana. \ 
+
+Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
+
+* Plano principal: Brasil, Honduras, Venezuela. \
+* Dimensión 1 + Dimensión 3: Paraguay, Bolivia, Brasil, Cuba. \
+* Dimensión 1 + Dimensión 4: Barbados, Cuba. \
+* Dimensión 3 + Dimensión 4: Panamá. \
 
 
 ```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
@@ -262,15 +271,9 @@ fviz_pca_ind(acp1984, axes = c(3,4),col.ind = "cos2",
 ```
 
 
-Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
-
-* Plano principal: Brasil, Honduras, Venezuela. \
-* Dimensión 1 + Dimensión 3: Paraguay, Bolivia, Brasil, Cuba. \
-* Dimensión 1 + Dimensión 4: Barbados, Cuba. \
-* Dimensión 3 + Dimensión 4: Panamá. \
-
 #### Caracterización de países para 1984
 
+\
 **Grupo 1: **
 * Valores altos de proporción de consumo energético residencial. \
 * Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per cápita, productividad energética, consumo energético final per-cápita. \
@@ -283,11 +286,13 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Valores altos de oferta de energía primaria, consumo energético final per-cápita, consumo eléctrico per cápita, proporción de consumo energético industrial, y la oferta de energía secundaria. \
 * Valores bajos de la proporción de consumo energético residencial. \
 
+
 |             | **Países**                                                                                                 |
 |:-----------:|:-----------------------------------------------------------------------------------------------------------|
 |**Grupo 1**  | El Salvador, Guatemala, Guyana, Haití, Honduras, Nicaragua, Paraguay, Rep. Dominicana, Costa Rica, Bolivia |
 |**Grupo 2**  | Argentina, Barbados, Cuba, Ecuador, México, Perú, Jamaica, Uruguay, Brasil, México, Panamá                 |
 |**Grupo 3**  | Trinidad, Venezuela                                                                                        |
+
 
 ```{r,out.width="80%"}
 hcpc1984<-HCPC(res.pca1984, graph = FALSE)
@@ -317,7 +322,7 @@ colnames(vp96)="Valores propios"
 La variabilidad de los datos es captada en un 41.17% por el primer eje de inercia creado a partir de ACP. Sumar una segunda dimensión incrementa este porcentaje a 65.38%. Se capta más del 80% de la varianza si se contemplan al menos 4 dimensiones. El criterio de Kaiser nos vuelve a sugerir trabajar con 4 componentes.
 
 
-```{r vp 1996, results='asis'}
+```{r vp 1996, results='hold', fig.align='center'}
 kable(vp96,booktabs=TRUE)
 ```
 
@@ -429,6 +434,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Valores altos de proporción de consumo energético residencial. \
 
 * Valores bajos de consumo eléctrico per capita, oferta de energía secundaria per cápita, PBI per-cápita, consumo energético final per-cápita, proporción de consumo de energía secundaria per-cápita, emisión de CO2 per-cápita, proporción de consumo energético industrial, del sector transporte, y la productividad energética. \
+
          
 **Grupo 2:** 
 
@@ -436,6 +442,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Valores altos de oferta de energía secundaria, proporción de consumo de energía secundaria, consumo eléctrico per cápita, proporción de consumo eléctrico del sector transporte, PBI per cápita, emisión de CO2 per cápita, y productividad energética. \
 
 * Valores bajos de la proporción de consumo energético residencial.
+
 
 **Grupo 3:**
 
@@ -447,6 +454,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 |**Grupo 1**  | El Salvador, Guatemala, Guyana, Haití, Honduras, Nicaragua, Paraguay, Perú, Ecuador, Bolivia, Rep. Dominicana |
 |**Grupo 2**  | Argentina, Barbados, Cuba, Venezuela, Jamaica, Uruguay, Brasil, Chile, México, Costa Rica, Panamá,            |
 |**Grupo 3**  | Trinidad                                                                                                      |
+
 
 
 ```{r, out.width="80%"}
@@ -463,51 +471,56 @@ fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
 ## Principales conclusiones
 
 
-\newpage
 
 ## Anexos
 
 
-```{r tabla de datos}
-
-kable(head(Energia1[2:9]),caption = "Primeras 5 filas de datos",booktabs=TRUE)
-
-
-kable(head(Energia1[10:15]),caption = "Primeras 5 filas de datos (cont.)",booktabs=TRUE)
+```{r tabla de datos,fig.align='center'}
+kable(head(Energia1[1:6]),caption = "Primeras 5 filas de datos",booktabs=TRUE) %>% 
+  kable_styling(latex_options="hold_position")
 ```
 
+```{r,fig.align='center'}
+kable(head(Energia1[7:12]),caption = "Primeras 5 filas de datos (cont.)",booktabs=TRUE)
+```
+
+```{r,fig.align='center'}
+kable(head(Energia1[13:15]),caption = "Primeras 5 filas de datos (cont.)",booktabs=TRUE)
+```
 
 ```{r, tabla estandarizada, fig.align='center'}
 kable(head(Energia_st[4:10]),caption = "Primeras 5 filas de datos estandarizados",booktabs=TRUE)
-
-kable(head(Energia_st[10:17]),caption = "Primeras 5 filas de datos estandarizados (cont.)",booktabs=TRUE)
 ```
 
-
-```{r summary de las variables originales va en anexos, include=FALSE}
-summary(Energia1[,2:15])
+```{r,fig.align='center'}
+kable(head(Energia_st[11:17]),caption = "Primeras 5 filas de datos estandarizados (cont.)",booktabs=TRUE)
 ```
 
+```{r summary de las variables originales va en anexos, fig.align='center',fig.cap= "Descripción de la base de datos"}
+(summary(Energia1[,2:15]))
+```
 
 ```{r correlaciones 1984, fig.align='center'}
-
-
-kable(cor(Energia1[Energia1$Año==1984,2:9]), caption="Matriz de correlaciones. 1984.",booktabs=TRUE)
-
-
-kable(cor(Energia1[Energia1$Año==1984,10:15]), caption="Matriz de correlaciones. 1984. (cont.)",booktabs=TRUE)
+kable(cor(Energia1[Energia1$Año==1984,2:8]), caption="Matriz de correlaciones. 1984",booktabs=TRUE)
 ```
 
-\
-```{r correlaciones 1996}
-
-kable(cor(Energia1[Energia1$Año==1996,2:8]), caption="Matriz de correlaciones. 1996.",booktabs=TRUE)
-kable(cor(Energia1[Energia1$Año==1996,9:15]), caption="Matriz de correlaciones. 1996. (cont.)",booktabs=TRUE)
-
+```{r correlaciones 1984 cont, fig.align='center'}
+kable(cor(Energia1[Energia1$Año==1984,9:15]), caption="Matriz de correlaciones. 1984 (cont.)",booktabs=TRUE)
 ```
 
+```{r correlaciones 1996, fig.align='center'}
+kable(cor(Energia1[Energia1$Año==1996,2:8]), caption="Matriz de correlaciones. 1996",booktabs=TRUE)
+```
 
-```{r summary de ACP, va en anexos,include=FALSE}
-summary(res.pca1984)
+```{r, fig.align='center',results='asis'}
+kable(cor(Energia1[Energia1$Año==1996,9:15]), caption="Matriz de correlaciones. 1996 (cont.)",booktabs=TRUE)
+```
+
+```{r summary de ACP, va en anexos,fig.align='center',fig.cap="ACP. Resultados principales para 1984"}
+(summary(res.pca1984))
+```
+
+```{r, va en anexos,fig.align='center',fig.cap="ACP. Resultados principales para 1984"}
+(summary(res.pca1996))
 ```
 
