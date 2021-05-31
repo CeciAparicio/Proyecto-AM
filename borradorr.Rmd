@@ -3,12 +3,14 @@ title: "Untitled"
 author: "Cecilia Aparicio"
 date: "Mayo 2021"
 output:
-  pdf_document: default
-  html_document: default
+  rmarkdown::pdf_document:
+    fig_caption: yes        
+    includes:  
+      in_header: encabezado.tex
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center",results = "hold")
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE,fig.align = "center",fig.pos = 'H')
 ``` 
 
 ```{r}
@@ -27,10 +29,10 @@ library(factoextra)
 
 >introducir acá de qué se va a tratar el proyecto: estudio de principales variables que explican el desarrollo sustentable, comparación entre los 80 y los 90 para identificar cambios que sean indicios de avance en la aplicación de politicas energeticas que favorezcan la sustentabilidad del desarrolloetc etc etc##.
 
-### Desarrollo sustentable
+## Desarrollo sustentable en América Latina
 
 
-Def de desarrollo sustentable: desarrollo que distribuye más equitativamente los beneficios del progreso económico, protege al medioambiente nacional y mundial en beneficio de las futuras generaciones y mejore genuinamente la calidad de vida.
+Se define el desarrollo sustentable como aquel que distribuye más equitativamente los beneficios del progreso económico, protege al medioambiente nacional y mundial en beneficio de las futuras generaciones y mejore genuinamente la calidad de vida (CEPAL/OLADE/GTZ, 1997).
 
 
 Existe un fuerte vínculo entre el desarrollo y la energía, siendo este último un insumo fundamental para ello. Sin embargo, debe prestarse especial atención al efecto negativo que puede tener tal desarrollo en el medioambiente, y por tanto, en la disponibilidad futura de recursos energéticos. Aquí es donde entre en juego la noción de sustentabilidad.
@@ -44,7 +46,7 @@ El estudio del desarrollo sustentable entonces, deberá contemplar varias arista
 
 En este trabajo se intentará superar tales dificultades.
 
-Nos basaremos en el estudio realizado por OLADE, CEPAL, y GTZ "....inserte nombre aki" , a los efectos de identificar posibles relaciones entre la situación energética y la sustentabilidad de cada país. Además, se buscarán posibles cambios que se hayan dado en el tiempo de estas relaciones, que evidencien un avance en el desarrollo sustentable entre la década de los 80 y 90. Para ello, compararemos datos del año 1984 y 1996.
+Nos basaremos en el estudio realizado por OLADE, CEPAL, y GTZ: *"Energía y Desarrollo sustentable en América Latina y el Caribe"*, a los efectos de identificar posibles relaciones entre la situación energética y la sustentabilidad del desarrollo regional. Además, se buscarán posibles cambios que se hayan dado en el tiempo de estas relaciones, que evidencien un avance en el desarrollo sustentable entre la década de los 80 y 90. Para ello, compararemos datos del año 1984 y 1996.
 
 
 ## Patrones de situación energética en AL
@@ -68,7 +70,6 @@ La clasificación realizada por los autores fue la siguiente:
 | C                 | Colombia, Costa Rica, México, Panamá, Jamaica                            | 
 | D                 | Bolivia, Ecuador, Guyana, Nicaragua, Perú, Suriname, Cuba                | 
 | E                 | Guatemala, Honduras, República Dominicana, El Salvador, Granada, Haití   | 
->Ver cómo se relaciona esta clasificación con la anterior.
 
 
 ### Indicadores:
@@ -86,9 +87,11 @@ La clasificación realizada por los autores fue la siguiente:
 Teniendo en cuenta los indicadores antes mencionados, la evaluación de ellos en la región llevaron a la conformación de 4 grandes "bloques" con 2 sub-bloques cada uno, que comparten distintas características.
 
 
+
 ```{r Cuadro1, fig.align = 'center', out.width="90%",fig.cap = "Cuadro extraído de Energía y desarrollo sustentable en América Latina y El Caribe. OLADE/CEPAL/GTZ, 1997."}
 knitr::include_graphics(here::here("patrones.png"))
 ```
+
 
 
 Se observa que existen ciertas correspondencias entre los patrones aquí detallados y los de situación energética, algunos más claros que otros.
@@ -101,16 +104,14 @@ Se observa que existen ciertas correspondencias entre los patrones aquí detalla
 | III                   | B                     |
 | IV                    | C,D,E                 |
 
-> En estos patrones nos vamos a basar para reproducrilo con ACP y comparar los cambios entre el 84 y el 96
 
-### Breve descripción de los datos
+\pagebreak
 
 
-#### Países que se incluyen en el análisis:
+## Breve descripción de los datos bajo análisis
 
-\
-Contamos con información de 24 países (todos ellos  de América Latina y el Caribe) y 14 variables para examinar, todas ellas cuantitativas, por lo que se procede a realizar un Análisis de Componentes Principales (ACP).
-Como primer paso, y de acuerdo a lo sugerido, se estandarizan las variables para una correcta interpretación de los resultados.
+
+#### Países (total: 24)
 
 ```{r datos, include=FALSE,cache= TRUE}
 Energia1 <- read.delim("C:/Users/cecil/OneDrive/Documentos/facu/ESTADISTICA/AMulti/Proyecto/Energia1.txt")
@@ -130,27 +131,32 @@ rownames(Energia_st)=Energia_st$PAISES
 rownames(Energia1)=Energia1$PAISES
 ```
 
+\hfill\break
+Contamos con información de 24 países (todos ellos  de América Latina y el Caribe) y 14 variables para examinar, todas ellas cuantitativas, por lo que se procede a realizar un Análisis de Componentes Principales (ACP).
+Como primer paso, y de acuerdo a lo sugerido, se estandarizan las variables para una correcta interpretación de los resultados.
 
-```{r, fig.align="left",results='hold'}
-kable(unique(pais), booktabs=TRUE,caption = "Países considerados")
+
+```{r, results='hold', fig.cap="Lista de países incluidos"}
+kable(matrix(unique(pais),6,6))
 ```
 
 
 #### Relación entre las variables (1984-1996)
 
-\
-Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos (ver tabla en Anexos). Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
+\hfill\break
+Para el año 1984, observamos que existe correlaciones altas (>0.70) en varios casos (ver Tabla 11-12 en Anexos). Se destaca principalmente la correlación entre la productividad energética (*Prod_Ene*) con el ingreso per cápita (*PBIpc*), el consumo energético per cápita (*ConsENpc*) con la oferta primaria de energía per cápita (*O_PRIpc*) y con el consumo eléctrico neto (*C_ELEpc*), y de esta última también con la oferta primaria de energía per cápita.
 
-Para el año 1996, observamos que se mantienen las correlaciones elevadas detectadas para 1984 (ver tabla en Anexos). Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
+
+Para el año 1996, observamos que se mantienen las correlaciones elevadas detectadas para 1984 (ver Tabla 13-14 en Anexos). Se suman al listado la relación negativa entre la oferta secundaria de energía per-cápita y la proporción de consumo residencial.
+
 
 La existencia de correlación alta entre las variables justifica el uso de ACP. La relación entre ellas puede tener como resultado información redundante, la cual intentaremos "aislar" con este método.
 
 
-### Análisis de componentes principales para 1984
+## Análisis de componentes principales para 1984
 
 
 La variabilidad de los datos es captada en un 46.54% por el primer eje de inercia creado a partir de ACP. Sumar una segunda dimensión incrementa este porcentaje a 63.3%. Se capta más del 80% de la varianza si se contemplan al menos 4 dimensiones. Según la regla de Kaiser, deberían retenerse aquellos componentes que tengan una varianza mayor o igual a 1. En nuestro caso, eso implicaría trabajar con 4 componentes.
-
 
 ```{r,include=FALSE}
 acp1984=PCA(Energia_st[Energia_st$Año==1984,c(4:17)])
@@ -160,23 +166,23 @@ res.pca1984 = PCA(Energia_st[Energia_st$Año==1984,c(4:17)], scale.unit=TRUE, nc
 vp84<-res.pca1984[["eig"]][,1] %>% 
   as.data.frame()
 colnames(vp84)="Valores propios"
-kable(vp84,booktabs=TRUE,)
+kable(vp84,booktabs=TRUE)
 ```
 
-
-```{r plot eigen84,out.width="80%"}
+\hfill\break
+```{r plot eigen84,out.width="75%"}
 vp84<-cbind.data.frame(vp84,res.pca1984[["eig"]][,3])
 colnames(vp84)=c("Valores propios","% acumulado de varianza")
 fviz_eig(acp1984,ylab = "% de inercia explicada", xlab = "Valores propios", main = "Inercia explicada por los componentes")
 ```
 
 
+\hfill\break
 
 Por otra parte, el criterio *"Broken-sitcks"*, sugiere retener tantos componentes que expliquen una proporción mayor a la varianza que la esperada si se "dividiera" en $p$ partes aleatorias. Para nuestro caso, implicaría también retener en el entorno de 3 a 4 componentes, aunque la diferencia entre la inercia explicada por los componentes y la explicada de forma "aleatoria" en los componentes 3 y 4, no difieren demasiado. Por ende, podemos pensar que la "información real" está mayormente captada por los dos primeros componentes.
 
 
-
-```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE,out.width="80%"}
+```{r criterio BS 1984, fig.cap="Criterio Broken-sticks para la elección de componentes",cache=TRUE,out.width="75%"}
 evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
   # Broken stick model
   n = length(ev)  
@@ -198,7 +204,7 @@ evplot = function(ev) {  ### FUNCION UTIL PARA ELEGIR COMP CON EL CRITERIO BS
 evplot(vp84[,1])
 ```
 
-
+\hfill\break    
 La pérdida de información en caso de trabajar con el plano principal sería de 36.7% con respecto a la nube de datos original, mientras que considerar 4 implica perder únicamente 13.8%.
 
 Una vez determinado, de forma preliminar, la dimensión en que se trabajará, realizamos el cálculo de componentes y su presentación gráfica para observar los resultados y confirmarlo. 
@@ -215,7 +221,6 @@ dimdesc(acp1984)[4]
 * Dimensión 2: Productividad industrial energética, productividad energética. \
 * Dimensión 3: Emisión de CO2 por unidad de consumo energético, emisión de CO2 per-cápita. \
 * Dimensión 4: Proporción de energía importada sobre el total de la oferta. \
-
 Resulta claro entonces que el tercer componente representará la *dimensión ambiental*, la cuarta representa la *dimensión política* (autarquía política dada por el nivel de dependencia energético), mientras que el primero representará la *dimensión social* (abastecimiento de energía a distintos sectores de la sociedad, nivel de ingresos, etc.), y el segundo la *dimensión económica*.
 
 A su vez, entendemos que las dimensiones más relevante son la social y la económica, dado que son las que explican en mayor medida las variaciones de los datos. En lo que respecta a la dimensión ambiental y política, no hay variaciones significativas en los datos.Siendo así, podemos restringir el análisis al plano principal por mayor practicidad, donde estaríamos prescindiendo principalmente, del aporte de las variables Importaciones y emisión de CO2 per cápita.
@@ -223,26 +228,24 @@ A su vez, entendemos que las dimensiones más relevante son la social y la econ�
 Visualizamos en los correspondientes círculos de correlaciones:
 
 
-```{r, fig.cap= "Dimensiones 1 y 2.",out.width="80%"}
+```{r, fig.cap= "Dimensiones 1 y 2.",out.width="75%"}
 fviz_pca_var(acp1984, col.var = "cos2",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
              )
 ```
 
 
-
-```{r,fig.cap= "Dimensiones 3 y 4.",out.width="80%"}
+```{r,fig.cap= "Dimensiones 3 y 4.",out.width="75%"}
 fviz_pca_var(acp1984, col.var = "cos2", axes = c(3,4),
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
              )
 ```
 
-\
 
 En lo que respecta a los individuos (Países):
 
 
-```{r, fig.cap="Dimensiones 1 y 2.", out.width="80%"}
+```{r, fig.cap="Dimensiones 1 y 2.", out.width="75%"}
 fviz_pca_ind(acp1984, col.ind = "cos2", 
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE # Avoid text overlapping (slow if many points)
@@ -250,10 +253,11 @@ fviz_pca_ind(acp1984, col.ind = "cos2",
 ```
 
 
-Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
+Destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
 
 * Dimensión 1: Haití, Nicaragua, El Salvador, Guatemala, México, Argentina, Trinidad y Tobago. \
 * Dimensión 2: Uruguay, Guyana. \ 
+
 
 Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
 
@@ -263,7 +267,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Dimensión 3 + Dimensión 4: Panamá. \
 
 
-```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
+```{r, fig.cap="Dimensiones 3 y 4.",out.width="75%"}
 fviz_pca_ind(acp1984, axes = c(3,4),col.ind = "cos2", 
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE # Avoid text overlapping (slow if many points)
@@ -273,7 +277,7 @@ fviz_pca_ind(acp1984, axes = c(3,4),col.ind = "cos2",
 
 #### Caracterización de países para 1984
 
-\
+\hfill\break
 **Grupo 1: **
 * Valores altos de proporción de consumo energético residencial. \
 * Valores bajos de proporción de consumo de energía secundaria per-cápita, oferta de energía secundaria per cápita, proporción del consumo energético del sector transporte, PBI per-cápita, consumo eléctrico per cápita, productividad energética, consumo energético final per-cápita. \
@@ -293,8 +297,9 @@ fviz_pca_ind(acp1984, axes = c(3,4),col.ind = "cos2",
 |**Grupo 2**  | Argentina, Barbados, Cuba, Ecuador, México, Perú, Jamaica, Uruguay, Brasil, México, Panamá                 |
 |**Grupo 3**  | Trinidad, Venezuela                                                                                        |
 
+\hfill\break
 
-```{r,out.width="80%"}
+```{r,out.width="75%"}
 hcpc1984<-HCPC(res.pca1984, graph = FALSE)
 fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
              show.clust.cent = TRUE, # Show cluster centers
@@ -304,29 +309,31 @@ fviz_cluster(hcpc1984, repel = TRUE,            # Avoid label overlapping
 ```
 
 
-### Análisis de componentes principales para 1984
+## Análisis de componentes principales para 1996
+
 
 ```{r,include=FALSE}
 acp1996=PCA(Energia_st[Energia_st$Año==1996,c(4:17)])
 res.pca1996 = PCA(Energia_st[Energia_st$Año==1996,c(4:17)], scale.unit=TRUE, ncp=4, graph = FALSE)
 ```
 
+
+La variabilidad de los datos es captada en un 41.17% por el primer eje de inercia creado a partir de ACP. Sumar una segunda dimensión incrementa este porcentaje a 65.38%. Se capta más del 80% de la varianza si se contemplan al menos 4 dimensiones. El criterio de Kaiser nos vuelve a sugerir trabajar con 4 componentes.
+
+
 ```{r,include=FALSE}
 vp96<-res.pca1996[["eig"]][,1] %>% 
   as.data.frame()
 colnames(vp96)="Valores propios"
-
 ```
-
-
-La variabilidad de los datos es captada en un 41.17% por el primer eje de inercia creado a partir de ACP. Sumar una segunda dimensión incrementa este porcentaje a 65.38%. Se capta más del 80% de la varianza si se contemplan al menos 4 dimensiones. El criterio de Kaiser nos vuelve a sugerir trabajar con 4 componentes.
 
 
 ```{r vp 1996, results='hold', fig.align='center'}
 kable(vp96,booktabs=TRUE)
 ```
 
-```{r plot eigen96,out.width="80%"}
+
+```{r plot eigen96,out.width="75%"}
 vp96<-cbind.data.frame(vp96,res.pca1996[["eig"]][,3])
 colnames(vp96)=c("Valores propios","% acumulado de varianza")
 
@@ -337,7 +344,7 @@ fviz_eig(acp1984,ylab = "% de inercia explicada", xlab = "Valores propios", main
 El criterio *"Broken-sitcks"* en cambio, sugiere retener en el enotrno de 2-3 componentes:
 
 
-```{r criterio BS 1996, fig.="Criterio Broken-sticks para la elección de componentes",cache=TRUE, out.width="80%"}
+```{r criterio BS 1996, fig.="Criterio Broken-sticks para la elección de componentes",cache=TRUE, out.width="75%"}
 evplot(vp96[,1])
 ```
 
@@ -369,10 +376,11 @@ En comparación con 1984, muchas de las variables que habían sido agrupadas en 
 
 El conjunto de dimensiones más relevante sigue siendo la social y la económica, incluso con un leve aumento de su poder explicativo en comparación con 1984. Como consecuencia, entendemos que existió (en promedio) una variación muy reducida a nivel regional de los indicadores relativos al medioambiente y a la independencia política.
 
+\hfill\break
 Visualizamos en los correspondientes círculos de correlaciones:
 
 
-```{r, fig.cap= "Dimensiones 1 y 2.",out.width="80%"}
+```{r, fig.cap= "Dimensiones 1 y 2.",out.width="75%"}
 
 fviz_pca_var(acp1996, col.var = "cos2",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
@@ -380,7 +388,7 @@ fviz_pca_var(acp1996, col.var = "cos2",
 ```
 
 
-```{r,fig.cap= "Dimensiones 3 y 4.",out.width="80%"}
+```{r,fig.cap= "Dimensiones 3 y 4.",out.width="75%"}
 
 fviz_pca_var(acp1996, col.var = "cos2", axes = c(3,4),
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
@@ -388,30 +396,21 @@ fviz_pca_var(acp1996, col.var = "cos2", axes = c(3,4),
 ```
 
 
-En lo que respecta a los individuos (Países):
-
-```{r, fig.cap="Dimensiones 1 y 2.",out.width="80%"}
-fviz_pca_ind(acp1996, col.ind = "cos2", 
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             repel = TRUE # Avoid text overlapping (slow if many points)
-             )
-```
-
-
-Si bien se observa mayor dispersión en el caso de la representación de los países, destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
+\hfill\break
+En lo que respecta a los individuos (Países) destacamos los mejor representados ($\cos^2 \geq 0.5$) al igual que lo hicimos con las variables:
 
 * Dimensión 1: Haití, Nicaragua, El Salvador, Guatemala, México, Argentina, Trinidad y Tobago. \
 
 * Dimensión 2: Uruguay, Guyana. \ 
 
 
-```{r, fig.cap="Dimensiones 3 y 4.",out.width="80%"}
-
-fviz_pca_ind(acp1996, axes = c(3,4),col.ind = "cos2", 
+```{r, fig.cap="Dimensiones 1 y 2.",out.width="75%"}
+fviz_pca_ind(acp1996, col.ind = "cos2", 
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE # Avoid text overlapping (slow if many points)
              )
 ```
+
 
 
 Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún país. En cambio, diferentes combinaciones de ellas pueden llevar a una buena representación de algunos países:
@@ -425,9 +424,19 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 * Dimensión 3 + Dimensión 4: Panamá. \
 
 
+
+```{r, fig.cap="Dimensiones 3 y 4.",out.width="75%"}
+
+fviz_pca_ind(acp1996, axes = c(3,4),col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping (slow if many points)
+             )
+```
+
+\hfill\break
 #### Caracterización de países
 
-
+\hfill\break
 **Grupo 1: **
 
 
@@ -449,6 +458,7 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 
 * Valores altos de oferta de energía primaria, consume energético per-cápita, y proporción de consumo energético industrial. \
 
+
 |             | **Países**                                                                                                    |
 |:-----------:|:--------------------------------------------------------------------------------------------------------------|
 |**Grupo 1**  | El Salvador, Guatemala, Guyana, Haití, Honduras, Nicaragua, Paraguay, Perú, Ecuador, Bolivia, Rep. Dominicana |
@@ -456,8 +466,8 @@ Las dimensiones 3 y 4 por sí solas no representan satisfactoriamente ningún pa
 |**Grupo 3**  | Trinidad                                                                                                      |
 
 
-
-```{r, out.width="80%"}
+\hfill\break
+```{r, out.width="75%"}
 
 hcpc1996<-HCPC(acp1996, graph = FALSE)
 fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
@@ -466,13 +476,38 @@ fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
              ggtheme = theme_minimal(),
              main = "Caracterización de países para 1996")
 ```
-\
+
+\pagebreak
 
 ## Principales conclusiones
 
 
+Las principales características que diferenciaron el desarrollo de los países entre 1984-1996 en la región, se corresponden a los indicadores vinculados a lo económico y social, más que a lo ambiental y político. 
+
+Luego de realizar un análisis de componentes principales, obtuvimos una clasificación que consta de tres categorías en ambos períodos. Uno de ellos, consta de únicamente 2 países en 1984, mientras que en 1996 consta de un único país, mostrando un comportamiento diferente al resto, sin llegar a ser extremo.
+
+La categorización resultante en 1984 no coincide exactamente con la planteada originalmente por CEPAL/OLADE/GTZ. A grandes rasgos, se llega a una diferenciación de países según la proporción de consumo energético residencial (alto/bajo), que se opone al comportamiento del resto de las variables.
+
+En el **Grupo 1**, aquellos países que contaban con una proporción de consumo energético residencial alto, tenían un desempeño más pobre en los indicadores vinculados al abastecimiento de energías secundarías: consumo eléctrico per-cápita, oferta de energías secundarias, consumo de energías secundarias (coherente con el bajo nivel de oferta). También contaban con valores bajos para la proporción de consumo energético del sector transporte, del PBI per-cápita, y de la productividad energética. Esto implica carencias a nivel económico, más específicamente, en la eficiencia energética del sector productivo y sus posibles consecuencias a nivel social. Como contraparte, un buen abastecimiento de energía residencial implica cierta cobertura de necesidades básicas energéticas, que tiene un impacto positivo en la dimensión social del desarrollo sustentable.
+
+Por otro lado, en el **Grupo 2** sucedía lo contrario. Se observa que la proporción de consumo residencial es baja, pero cuentan con un uso amplio de energías secundarias, y mejor desempeño a nivel de eficiencia energética en la producción. Se observa también que en promedio, los países que pertenecen a este grupo tienen un mayor PBI per-cápita.
+
+Por último, en el **Grupo 3**, se vincula con un mayor nivel de oferta de energía primaria, consumo energético final per-cápita, y proporción de consumo energético industrial. Entendemos que se podría tratar de países con un nivel significativo de exportaciones de energía, ya que son los que presentaban menor nivel de importación energética.
+
+Los resultados para 1996 no dieron pauta de que haya existido un cambio estructural importante en la década de los 80-90. Las categorías para 1996 son, en esencia, las mismas antes mencionadas, con algunas variantes menores respecto a las variables que representan. Por ejemplo, el nivel de emisión de CO2 per-cápita está presente de forma significativa en la elaboración de las categorías 1 y 2, debido a que este indicador se volvió levemente más relevante en 1996. Las emisiones de CO2 eran mayores (en promedio) en los países del Grupo 2 que en el Grupo 1.
+
+A modo de conclusión, encontramos que existía una relación positiva entre la diversificación energética (por ejemplo, con la incorporación de la generación de energía eléctrica a la matriz productiva) y la eficiencia energética del sector productivo, que favorece al desarrollo de los países. Sin embargo, podrían haber indicios que muestren que este desarrollo no era sustentable, ya que en 1996 se vuelve relevante el nivel de emisión de CO2 per cápita.
+
+\pagebreak
 
 ## Anexos
+
+
+```{r summary de las variables originales va en anexos, fig.align='center'}
+"Descripción de la base de datos"
+
+(summary(Energia1[,2:15]))
+```
 
 
 ```{r tabla de datos,fig.align='center'}
@@ -496,10 +531,6 @@ kable(head(Energia_st[4:10]),caption = "Primeras 5 filas de datos estandarizados
 kable(head(Energia_st[11:17]),caption = "Primeras 5 filas de datos estandarizados (cont.)",booktabs=TRUE)
 ```
 
-```{r summary de las variables originales va en anexos, fig.align='center',fig.cap= "Descripción de la base de datos"}
-(summary(Energia1[,2:15]))
-```
-
 ```{r correlaciones 1984, fig.align='center'}
 kable(cor(Energia1[Energia1$Año==1984,2:8]), caption="Matriz de correlaciones. 1984",booktabs=TRUE)
 ```
@@ -516,11 +547,17 @@ kable(cor(Energia1[Energia1$Año==1996,2:8]), caption="Matriz de correlaciones. 
 kable(cor(Energia1[Energia1$Año==1996,9:15]), caption="Matriz de correlaciones. 1996 (cont.)",booktabs=TRUE)
 ```
 
-```{r summary de ACP, va en anexos,fig.align='center',fig.cap="ACP. Resultados principales para 1984"}
+
+```{r summary de ACP, va en anexos,fig.align='center'}
+"ACP. Resultados principales para 1984"
+
 (summary(res.pca1984))
 ```
 
-```{r, va en anexos,fig.align='center',fig.cap="ACP. Resultados principales para 1984"}
+
+```{r, va en anexos,fig.align='center'}
+"ACP. Resultados principales para 1996"
+
 (summary(res.pca1996))
 ```
 
