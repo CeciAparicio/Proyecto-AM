@@ -40,13 +40,16 @@ Existe también una tercera categoría que sólo contempla 1 o 2 países (depend
 Las categorías resultantes no coinciden exactamente con las planteadas por los autores en el estudio mencionado. De todas formas, puede hallarse cierta similitud entre nuestra categoría 3 y el Grupo I del estudio (a excepción de Barbados), nuestra categoría 1 y el grupo IV (a excepción de Cuba), y nuestra categoría 2 con el grupo II y III. 
 
 \pagebreak
-## Desarrollo sustentable en América Latina
+## Introducción
+
+
+### Desarrollo sustentable en América Latina
 
 
 Se define el desarrollo sustentable como aquel que distribuye más equitativamente los beneficios del progreso económico, protege al medioambiente nacional y mundial en beneficio de las futuras generaciones y mejore genuinamente la calidad de vida (CEPAL/OLADE/GTZ, 1997).
 
 
-Existe un fuerte vínculo entre el desarrollo y la energía, siendo este último un insumo fundamental para ello. Sin embargo, debe prestarse especial atención al efecto negativo que puede tener tal desarrollo en el medioambiente, y por tanto, en la disponibilidad futura de recursos energéticos. Aquí es donde entre en juego la noción de sustentabilidad.
+Existe un fuerte vínculo entre el desarrollo y la energía, siendo este último un insumo fundamental para ello. Sin embargo, debe prestarse especial atención al efecto negativo que puede tener tal desarrollo en el medioambiente, tanto en la disponibilidad futura de recursos energéticos, como otras condicionantes negativas medioambientales relacionadas a la contaminación (más aún a nivel local), como al cambio climático. Aquí es donde entre en juego la noción de sustentabilidad.
 
 
 El estudio del desarrollo sustentable entonces, deberá contemplar varias aristas. Desde la CEPAL(1997) se sugiere focalizarse en la dimensión *política, económica, social, y ambiental*. Dada la complejidad de las mismas, no pueden medirse directamente a través de un único indicador.
@@ -57,7 +60,7 @@ El estudio del desarrollo sustentable entonces, deberá contemplar varias arista
 
 En este trabajo se intentará superar tales dificultades.
 
-Nos basaremos en el estudio realizado por OLADE, CEPAL, y GTZ: *"Energía y Desarrollo sustentable en América Latina y el Caribe"*, a los efectos de identificar posibles relaciones entre la situación energética y la sustentabilidad del desarrollo regional. Además, se buscarán posibles cambios que se hayan dado en el tiempo de estas relaciones, que evidencien un avance en el desarrollo sustentable entre la década de los 80 y 90. Para ello, compararemos datos del año 1984 y 1996.
+Nos basaremos en el estudio realizado por OLADE, CEPAL, y GTZ: *"Energía y Desarrollo sustentable en América Latina y el Caribe"*,  y en datos regionales respecto a las características socioeconómicas, y fundamentalmente las referidas al uso y explotación de recursos energéticos, a los efectos de identificar posibles relaciones entre la situación energética y la sustentabilidad del desarrollo regional. Además, se buscarán posibles cambios que se hayan dado en el tiempo de estas relaciones, que evidencien un avance en el desarrollo sustentable entre la década de los 80 y 90. Para ello, compararemos datos del año 1984 y 1996.
 
 \pagebreak
 ## Patrones de situación energética en AL
