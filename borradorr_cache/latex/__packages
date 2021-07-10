@@ -1,0 +1,14 @@
+base
+tinytex
+knitr
+dplyr
+FactoMineR
+shiny
+FactoInvestigate
+ggplot2
+Factoshiny
+stringr
+xtable
+kableExtra
+rmarkdown
+factoextra

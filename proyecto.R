@@ -143,3 +143,9 @@ fviz_cluster(hcpc1996, repel = TRUE,            # Avoid label overlapping
 
 fviz_pca_biplot(acp1984)
 fviz_pca_biplot(acp1984)
+
+Energia1_nuevo<-Energia1[,-c(9,15)]
+
+energst<-cbind(Energia1_nuevo[,c(1,14,15)],scale(Energia1_nuevo[,2:13]))
+res.pca1984 = PCA(energst[energst$Año==1984,c(4:15)], scale.unit=TRUE, ncp=4, graph = FALSE)
+resshiny1984 = PCAshiny(res.pca1984)
